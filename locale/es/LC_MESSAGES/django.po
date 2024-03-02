@@ -1,0 +1,87 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-01 20:48+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: api/jokometian_utils.py:7
+msgid "Fiery"
+msgstr "Ardiente"
+
+#: api/jokometian_utils.py:8
+msgid "Spiritual"
+msgstr "Espiritual"
+
+#: api/jokometian_utils.py:9
+msgid "Diverse"
+msgstr "Diverso"
+
+#: api/jokometian_utils.py:10
+msgid "Wise"
+msgstr "Sabio"
+
+#: api/jokometian_utils.py:11
+msgid "Radiant"
+msgstr "Radiante"
+
+#: api/jokometian_utils.py:12
+msgid "Resilient"
+msgstr "Resiliente"
+
+#: api/jokometian_utils.py:13
+msgid "Fierce"
+msgstr "Feroz"
+
+#: api/jokometian_utils.py:14
+msgid "Pure Soul"
+msgstr "Alma Pura"
+
+#: api/jokometian_utils.py:19
+msgid "born from the flames of challenge, always ready to ignite change."
+msgstr "nacido de las llamas del desafío, siempre listo para encender el cambio."
+
+#: api/jokometian_utils.py:20
+msgid "with a deep spiritual connection, seeking harmony in all."
+msgstr "con una profunda conexión espiritual, buscando la armonía en todo."
+
+#: api/jokometian_utils.py:21
+msgid "celebrating diversity, embodying the beauty of all cultures."
+msgstr "celebrando la diversidad, encarnando la belleza de todas las culturas."
+
+#: api/jokometian_utils.py:22
+msgid "imbued with wisdom, understanding the balance of power."
+msgstr "impregnado de sabiduría, comprendiendo el equilibrio del poder."
+
+#: api/jokometian_utils.py:23
+msgid "radiating acceptance, embracing all forms of love."
+msgstr "radiando aceptación, abrazando todas las formas de amor."
+
+#: api/jokometian_utils.py:24
+msgid "showing unmatched resilience, overcoming every obstacle."
+msgstr "mostrando una resiliencia inigualable, superando cada obstáculo."
+
+#: api/jokometian_utils.py:25
+msgid "fierce in the face of adversity, a warrior of light."
+msgstr "feroz ante la adversidad, un guerrero de la luz."
+
+#: api/jokometian_utils.py:26
+msgid "an untainted soul, spreading joy and laughter wherever they go."
+msgstr "un alma pura, esparciendo alegría y risas dondequiera que vaya."
+
+#: api/jokometian_utils.py:59 api/jokometian_utils.py:60
+msgid "A Jokometian "
+msgstr "Un chistonano "

@@ -1,0 +1,6 @@
+Django==3.2.12
+djangorestframework==3.14.0
+python-dotenv==1.0.0
+black==24.2.0
+PyMySQL==1.1.0
+drf-yasg==1.21.7
