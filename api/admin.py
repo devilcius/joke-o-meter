@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Joke, JokeEvaluation
+
+admin.site.register(Joke)
+admin.site.register(JokeEvaluation)

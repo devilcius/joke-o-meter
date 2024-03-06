@@ -1,90 +1,108 @@
 from django.test import TestCase
-from api.models import Jokometian, Joke, JokeEvaluation, EvaluationSession
-from api.jokometian_utils import generate_jokometian_name, generate_jokometian_description, generate_jokometian_image, determine_offense_rates_for_evaluation
+from api.models import Joke, OffenseTrait, JokeEvaluation, EvaluationSession
+from api.jokometian_utils import create_jokometian_from_jokes_evaluation
+from django.conf import settings
+from django.test import override_settings
 
 
-class JokometianUtilsTest(TestCase):
+@override_settings(LANGUAGE_CODE="en-us")
+class CreateJokometianFromJokesEvaluationTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Create offense traits
+        cls.race_trait = OffenseTrait.objects.create(name=OffenseTrait.RACE, degree=10)
+        cls.gender_trait = OffenseTrait.objects.create(
+            name=OffenseTrait.GENDER, degree=8
+        )
+        cls.no_offense_trait = OffenseTrait.objects.create(
+            name=OffenseTrait.NO_OFFENSE_FOUND, degree=0
+        )
 
-    def test_generate_jokometian_name(self):
-        # Test for "Fire Jokometian" name
-        jokometian_fire = Jokometian(race_rate=51)
-        self.assertEqual(generate_jokometian_name(
-            jokometian_fire), "Fiery Jokometian")
+        # Create jokes linked to traits
+        cls.joke_with_race = Joke.objects.create(
+            content="Race joke", trait=cls.race_trait
+        )
+        cls.joke_with_gender = Joke.objects.create(
+            content="Gender joke", trait=cls.gender_trait
+        )
+        cls.joke_with_no_offense = Joke.objects.create(
+            content="No offense joke", trait=cls.no_offense_trait
+        )
 
-        # Test for "Pure Soul Jokometian" name (default case)
-        jokometian_pure = Jokometian()
-        self.assertEqual(generate_jokometian_name(
-            jokometian_pure), "Pure Soul Jokometian")
+        # Create an evaluation session
+        cls.session = EvaluationSession.objects.create()
 
-        # Add more scenarios for other traits...
+    def test_with_mixed_liked_jokes(self):
+        # Create liked evaluations for different traits
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_race, liked=True
+        )
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_gender, liked=True
+        )
+        evaluations = JokeEvaluation.objects.all()
 
-    def test_generate_jokometian_description(self):
-        # Test specific descriptions based on offense rates
-        jokometian_fire = Jokometian(race_rate=51)
-        self.assertIn("flames of challenge",
-                      generate_jokometian_description(jokometian_fire))
+        jokometian = create_jokometian_from_jokes_evaluation(evaluations)
 
-        # Test the default description
-        jokometian_pure = Jokometian()
-        self.assertIn("untainted soul",
-                      generate_jokometian_description(jokometian_pure))
+        # Assert that Jokometian's name and description consider the dominant trait (Race in this case)
+        self.assertEqual(jokometian.name, "Fiery")
+        self.assertIn("Born from the flames of challenge", jokometian.description)
+        self.assertEqual(
+            jokometian.image_url,
+            settings.STATIC_URL + "images/jokometians/image_race.svg",
+        )
 
-        # Add more scenarios for other traits...
+    def test_no_offense_found_alone(self):
+        # Create an evaluation that likes a joke with no offense only
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_no_offense, liked=True
+        )
+        evaluations = JokeEvaluation.objects.all()
 
-    def test_generate_jokometian_image(self):
-        # Test image selection based on offense rates
-        jokometian_fire = Jokometian(race_rate=51)
-        self.assertTrue(
-            "image_race.svg" in generate_jokometian_image(jokometian_fire))
+        jokometian = create_jokometian_from_jokes_evaluation(evaluations)
 
-        # Test the default image (no offense)
-        jokometian_pure = Jokometian()
-        self.assertTrue(
-            "image_pure.svg" in generate_jokometian_image(jokometian_pure))
+        # Assert that Jokometian considers the NO_OFFENSE_FOUND trait when it's the only one liked
+        self.assertEqual(jokometian.name, "Pure Soul")
+        self.assertIn("An untainted soul", jokometian.description)
+        self.assertEqual(
+            jokometian.image_url,
+            settings.STATIC_URL + "images/jokometians/image_pure.svg",
+        )
 
+    def test_jokometian_traits(self):
+        # Create liked evaluations for different traits
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_gender, liked=True
+        )
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_no_offense, liked=True
+        )
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_race, liked=True
+        )
 
-class DetermineOffenseRatesForEvaluationTests(TestCase):
+        # Check Jokomenain.traits is a list of 3 traits
+        evaluations = JokeEvaluation.objects.all()
+        jokometian = create_jokometian_from_jokes_evaluation(evaluations)
+        # Only 2 traits sin no offense trait is removed
+        self.assertEqual(len(jokometian.traits), 2)
 
-    def setUp(self):
-        # Create some jokes with different offense types
-        self.joke_race = Joke.objects.create(
-            content="Race joke", offense_type="RACE")
-        self.joke_gender = Joke.objects.create(
-            content="Gender joke", offense_type="GENDER")
-        # Assuming EvaluationSession model exists and is required
-        self.session = EvaluationSession.objects.create()
-
-    def test_all_liked_jokes_same_type(self):
-        """All liked jokes are of the same offense type."""
-        evaluations = [
-            JokeEvaluation(session=self.session,
-                           joke=self.joke_race, liked=True),
-            JokeEvaluation(session=self.session,
-                           joke=self.joke_race, liked=True)
-        ]
-        offense_rates = determine_offense_rates_for_evaluation(evaluations)
-        self.assertEqual(offense_rates['race_rate'], 100)
-        self.assertEqual(offense_rates['gender_rate'], 0)
-
-    def test_mixed_liked_jokes_different_types(self):
-        """Liked jokes are evenly split between two offense types."""
-        evaluations = [
-            JokeEvaluation(session=self.session,
-                           joke=self.joke_race, liked=True),
-            JokeEvaluation(session=self.session,
-                           joke=self.joke_gender, liked=True)
-        ]
-        offense_rates = determine_offense_rates_for_evaluation(evaluations)
-        self.assertEqual(offense_rates['race_rate'], 50)
-        self.assertEqual(offense_rates['gender_rate'], 50)
+        # Test they are sorted by degree desc
+        self.assertEqual(jokometian.traits[0].name, self.race_trait.name)
+        self.assertEqual(jokometian.traits[1].name, self.gender_trait.name)
 
     def test_no_liked_jokes(self):
-        """No jokes are liked, resulting in a default no offense rate."""
-        evaluations = [
-            JokeEvaluation(session=self.session,
-                           joke=self.joke_race, liked=False),
-            JokeEvaluation(session=self.session,
-                           joke=self.joke_gender, liked=False)
-        ]
-        offense_rates = determine_offense_rates_for_evaluation(evaluations)
-        self.assertEqual(offense_rates['no_offense_rate'], 100)
+        # Case where there are no liked jokes
+        evaluations = JokeEvaluation.objects.all()
+
+        jokometian = create_jokometian_from_jokes_evaluation(evaluations)
+
+        # Assert default Jokometian properties when no jokes are liked
+        self.assertEqual(jokometian.name, "Jokometian")
+        self.assertEqual(
+            jokometian.description,
+            "An enigmatic Jokometian with a unique blend of traits.",
+        )
+        self.assertEqual(
+            jokometian.image_url, settings.STATIC_URL + "images/jokometians/default.svg"
+        )

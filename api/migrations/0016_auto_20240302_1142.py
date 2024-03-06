@@ -7,18 +7,20 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0015_alter_evaluationsession_id'),
+        ("api", "0015_alter_evaluationsession_id"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='evaluationsession',
-            name='id',
-            field=models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False),
+            model_name="evaluationsession",
+            name="id",
+            field=models.UUIDField(
+                default=uuid.uuid4, editable=False, primary_key=True, serialize=False
+            ),
         ),
         migrations.AlterField(
-            model_name='joke',
-            name='offense_degree',
+            model_name="joke",
+            name="offense_degree",
             field=models.IntegerField(default=0),
         ),
     ]

@@ -63,7 +63,7 @@ class Command(BaseCommand):
                         }}
 
                         Note: The response should strictly adhere to the JSON format for compatibility with downstream applications. Every value must be enclosed in double quotes. Just pass the json without formatting!
-                """
+                """,
             },
             {
                 "role": "user",

@@ -6,60 +6,60 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0011_rename_result_jokometian'),
+        ("api", "0011_rename_result_jokometian"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='jokometian',
-            name='description',
+            model_name="jokometian",
+            name="description",
         ),
         migrations.RemoveField(
-            model_name='jokometian',
-            name='name',
+            model_name="jokometian",
+            name="name",
         ),
         migrations.RemoveField(
-            model_name='jokometian',
-            name='session',
+            model_name="jokometian",
+            name="session",
         ),
         migrations.AddField(
-            model_name='jokometian',
-            name='disability_rate',
+            model_name="jokometian",
+            name="disability_rate",
             field=models.FloatField(default=0),
         ),
         migrations.AddField(
-            model_name='jokometian',
-            name='ethnicity_rate',
+            model_name="jokometian",
+            name="ethnicity_rate",
             field=models.FloatField(default=0),
         ),
         migrations.AddField(
-            model_name='jokometian',
-            name='gender_rate',
+            model_name="jokometian",
+            name="gender_rate",
             field=models.FloatField(default=0),
         ),
         migrations.AddField(
-            model_name='jokometian',
-            name='no_offense_rate',
+            model_name="jokometian",
+            name="no_offense_rate",
             field=models.FloatField(default=0),
         ),
         migrations.AddField(
-            model_name='jokometian',
-            name='race_rate',
+            model_name="jokometian",
+            name="race_rate",
             field=models.FloatField(default=0),
         ),
         migrations.AddField(
-            model_name='jokometian',
-            name='religion_rate',
+            model_name="jokometian",
+            name="religion_rate",
             field=models.FloatField(default=0),
         ),
         migrations.AddField(
-            model_name='jokometian',
-            name='sexual_orientation_rate',
+            model_name="jokometian",
+            name="sexual_orientation_rate",
             field=models.FloatField(default=0),
         ),
         migrations.AddField(
-            model_name='jokometian',
-            name='violence_rate',
+            model_name="jokometian",
+            name="violence_rate",
             field=models.FloatField(default=0),
         ),
     ]

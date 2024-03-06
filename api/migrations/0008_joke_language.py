@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0007_alter_joke_offense_type'),
+        ("api", "0007_alter_joke_offense_type"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='joke',
-            name='language',
-            field=models.CharField(default='Spanish', max_length=100),
+            model_name="joke",
+            name="language",
+            field=models.CharField(default="Spanish", max_length=100),
         ),
     ]

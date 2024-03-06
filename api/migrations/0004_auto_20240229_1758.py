@@ -6,16 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0003_alter_jokes_offense_degree'),
+        ("api", "0003_alter_jokes_offense_degree"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='Jokes',
-            new_name='Joke',
+            old_name="Jokes",
+            new_name="Joke",
         ),
         migrations.RenameModel(
-            old_name='Results',
-            new_name='Result',
+            old_name="Results",
+            new_name="Result",
         ),
     ]

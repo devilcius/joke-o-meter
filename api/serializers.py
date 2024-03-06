@@ -1,18 +1,22 @@
 from rest_framework import serializers
-from .models import Joke, JokeEvaluation, Jokometian
-from django.urls import reverse
+from .models import Joke, JokeEvaluation, OffenseTrait
 
 
 class JokeSerializer(serializers.ModelSerializer):
+    trait = serializers.SerializerMethodField()
+
     class Meta:
         model = Joke
-        fields = ['id', 'content']  # Only include id and content
+        fields = ["id", "content", "trait"]
+
+    def get_trait(self, obj):
+        return obj.trait.name if obj.trait else None
 
 
 class JokeEvaluationSerializer(serializers.ModelSerializer):
     class Meta:
         model = JokeEvaluation
-        fields = ['joke', 'liked', 'session']
+        fields = ["joke", "liked", "session"]
 
     def create(self, validated_data):
         """
@@ -21,14 +25,20 @@ class JokeEvaluationSerializer(serializers.ModelSerializer):
         return JokeEvaluation.objects.create(**validated_data)
 
 
-class JokometianSerializer(serializers.ModelSerializer):
-    detail_url = serializers.SerializerMethodField()
-
+class OffenseTraitSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Jokometian
-        fields = ['uuid', 'image_url', 'name', 'description', 'detail_url']
+        model = OffenseTrait
+        fields = ["name", "degree"]
 
-    def get_detail_url(self, obj):
-        # Assuming you have a named URL 'jokometian-detail' taking 'uuid' as an argument
-        request = self.context.get('request')
-        return request.build_absolute_uri(reverse('jokometian-detail', kwargs={'uuid': obj.uuid}))
+
+class JokometianSerializer(serializers.Serializer):
+    id = serializers.UUIDField()
+    traits = serializers.SerializerMethodField()
+    image_url = serializers.URLField()
+    name = serializers.CharField()
+    description = serializers.CharField()
+
+    def get_traits(self, obj):
+        # Use the OffenseTraitSerializer to serialize the traits
+        serializer = OffenseTraitSerializer(instance=obj.traits, many=True)
+        return serializer.data

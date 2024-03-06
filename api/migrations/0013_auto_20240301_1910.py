@@ -7,21 +7,21 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0012_auto_20240301_1532'),
+        ("api", "0012_auto_20240301_1532"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='jokometian',
-            name='image',
+            model_name="jokometian",
+            name="image",
         ),
         migrations.RemoveField(
-            model_name='jokometian',
-            name='url',
+            model_name="jokometian",
+            name="url",
         ),
         migrations.AddField(
-            model_name='jokometian',
-            name='uuid',
+            model_name="jokometian",
+            name="uuid",
             field=models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
         ),
     ]

@@ -1,111 +1,116 @@
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
-from django.utils.translation import gettext
+from .models import OffenseTrait
+from .dtos import Jokometian
 
-# Trait mappings for names
 trait_names = {
-    'race_rate': _("Fiery"),
-    'religion_rate': _("Spiritual"),
-    'ethnicity_rate': _("Diverse"),
-    'gender_rate': _("Wise"),
-    'sexual_orientation_rate': _("Radiant"),
-    'disability_rate': _("Resilient"),
-    'violence_rate': _("Fierce"),
-    'no_offense_rate': _("Pure Soul"),
+    OffenseTrait.RACE: _("Fiery"),
+    OffenseTrait.RELIGION: _("Spiritual"),
+    OffenseTrait.ETHNICITY: _("Diverse"),
+    OffenseTrait.GENDER: _("Wise"),
+    OffenseTrait.SEXUAL_ORIENTATION: _("Radiant"),
+    OffenseTrait.DISABILITY: _("Resilient"),
+    OffenseTrait.GENERIC_VIOLENCE: _("Fierce"),
+    OffenseTrait.NO_OFFENSE_FOUND: _("Pure Soul"),
 }
 
-# Descriptive mappings for descriptions
 trait_descriptions = {
-    'race_rate': _("born from the flames of challenge, always ready to ignite change."),
-    'religion_rate': _("with a deep spiritual connection, seeking harmony in all."),
-    'ethnicity_rate': _("celebrating diversity, embodying the beauty of all cultures."),
-    'gender_rate': _("imbued with wisdom, understanding the balance of power."),
-    'sexual_orientation_rate': _("radiating acceptance, embracing all forms of love."),
-    'disability_rate': _("showing unmatched resilience, overcoming every obstacle."),
-    'violence_rate': _("fierce in the face of adversity, a warrior of light."),
-    'no_offense_rate': _("an untainted soul, spreading joy and laughter wherever they go."),
+    OffenseTrait.RACE: _(
+        "Born from the flames of challenge, always ready to ignite change."
+    ),
+    OffenseTrait.RELIGION: _(
+        "With a deep spiritual connection, seeking harmony in all."
+    ),
+    OffenseTrait.ETHNICITY: _(
+        "Celebrating diversity, embodying the beauty of all cultures."
+    ),
+    OffenseTrait.GENDER: _("Imbued with wisdom, understanding the balance of power."),
+    OffenseTrait.SEXUAL_ORIENTATION: _(
+        "Radiating acceptance, embracing all forms of love."
+    ),
+    OffenseTrait.DISABILITY: _(
+        "Showing unmatched resilience, overcoming every obstacle."
+    ),
+    OffenseTrait.GENERIC_VIOLENCE: _(
+        "Fierce in the face of adversity, a warrior of light."
+    ),
+    OffenseTrait.NO_OFFENSE_FOUND: _(
+        "An untainted soul, spreading joy and laughter wherever they go."
+    ),
 }
 
-# Image mappings for each trait
+# Adjusted image mappings to use the OffenseTrait model's identifiers
 trait_images = {
-    'race_rate': settings.STATIC_URL + "api/images/jokometians/image_race.svg",
-    'religion_rate': settings.STATIC_URL + "api/images/jokometians/image_religion.svg",
-    'ethnicity_rate': settings.STATIC_URL + "api/images/jokometians/image_ethnicity.svg",
-    'gender_rate': settings.STATIC_URL + "api/images/jokometians/image_gender.svg",
-    'sexual_orientation_rate': settings.STATIC_URL + "api/images/jokoemtians/image_sexual_orientation.svg",
-    'disability_rate': settings.STATIC_URL + "api/images/jokometians/image_disability.svg",
-    'violence_rate': settings.STATIC_URL + "api/images/jokometians/image_violence.svg",
-    'no_offense_rate': settings.STATIC_URL + "api/images/jokometians/image_pure.svg",
+    OffenseTrait.RACE: settings.STATIC_URL + "images/jokometians/image_race.svg",
+    OffenseTrait.RELIGION: settings.STATIC_URL
+    + "images/jokometians/image_religion.svg",
+    OffenseTrait.ETHNICITY: settings.STATIC_URL
+    + "images/jokometians/image_ethnicity.svg",
+    OffenseTrait.GENDER: settings.STATIC_URL + "images/jokometians/image_gender.svg",
+    OffenseTrait.SEXUAL_ORIENTATION: settings.STATIC_URL
+    + "images/jokometians/image_sexual_orientation.svg",
+    OffenseTrait.DISABILITY: settings.STATIC_URL
+    + "images/jokometians/image_disability.svg",
+    OffenseTrait.GENERIC_VIOLENCE: settings.STATIC_URL
+    + "images/jokometians/image_violence.svg",
+    OffenseTrait.NO_OFFENSE_FOUND: settings.STATIC_URL
+    + "images/jokometians/image_pure.svg",
 }
 
 
-def generate_jokometian_name(jokometian):
-    # Sort traits by their rates in descending order and filter out non-dominant traits
-    sorted_traits = sorted(
-        trait_names.keys(), key=lambda x: getattr(jokometian, x), reverse=True)
-    dominant_trait = sorted_traits[0] if getattr(
-        jokometian, sorted_traits[0]) > 50 else 'no_offense_rate'
-    return f"{trait_names[dominant_trait]} Jokometian"
+def create_jokometian_from_jokes_evaluation(evaluations):
+    # Initialize a list to keep track of aggregated OffenseTrait objects
+    aggregated_traits = []
 
+    for eval in evaluations:
+        if eval.liked:
+            existing_trait = next(
+                (t for t in aggregated_traits if t.name == eval.joke.trait.name), None
+            )
+            if existing_trait:
+                # Increment the degree of the existing trait object
+                existing_trait.degree += eval.joke.trait.degree
+            else:
+                # Instantiate a new OffenseTrait object with initial degree, but don't save it to the database
+                new_trait = OffenseTrait(
+                    name=eval.joke.trait.name, degree=eval.joke.trait.degree
+                )
+                aggregated_traits.append(new_trait)
 
-def generate_jokometian_description(jokometian):
-    # Construct the description based on the top traits, considering their rates
-    sorted_traits = sorted(trait_descriptions.keys(),
-                           key=lambda x: getattr(jokometian, x), reverse=True)
-    top_descriptions = [str(trait_descriptions[trait]) for trait in sorted_traits if getattr(
-        jokometian, trait) > 20][:2]  # Convert to string here
+    # Exclude NO_OFFENSE_FOUND unless it's the only trait liked
+    no_offense_found_trait = [
+        t for t in aggregated_traits if t.name == OffenseTrait.NO_OFFENSE_FOUND
+    ]
+    if len(aggregated_traits) > 1 and no_offense_found_trait:
+        aggregated_traits.remove(no_offense_found_trait[0])
 
-    if not top_descriptions:  # Fallback to no offense description, ensure conversion to string if needed
-        return gettext("A Jokometian ") + str(trait_descriptions['no_offense_rate'])
-    return gettext("A Jokometian ") + " and ".join(top_descriptions)
+    # Sort the traits by their aggregated degree to find the top traits
+    dominant_traits = sorted(aggregated_traits, key=lambda t: t.degree, reverse=True)
+    if len(dominant_traits) > 2:
+        dominant_traits = dominant_traits[:3]
 
+    # Creating the Jokometian instance with the top dominant traits
+    jokometian = Jokometian()
+    jokometian.traits = dominant_traits
 
-def generate_jokometian_image(jokometian):
-    # Sort traits by their rates in descending order and filter out non-dominant traits
-    sorted_traits = sorted(trait_images.keys(),
-                           key=lambda x: getattr(jokometian, x), reverse=True)
-    dominant_trait = sorted_traits[0] if getattr(
-        jokometian, sorted_traits[0]) > 20 else 'no_offense_rate'
-    return trait_images[dominant_trait]
+    if dominant_traits:
+        # Set additional properties based on dominant traits
+        dominant_trait = dominant_traits[0]
+        jokometian.name = trait_names.get(dominant_trait.name, "Jokometian")
+        jokometian.description = ". ".join(
+            str(trait_descriptions[trait.name])
+            for trait in dominant_traits
+            if trait.name in trait_descriptions
+        )
+        jokometian.image_url = trait_images.get(
+            dominant_trait.name, settings.STATIC_URL + "images/jokometians/default.svg"
+        )
+    else:
+        # Set default Jokometian properties when no jokes are liked
+        jokometian.name = "Jokometian"
+        jokometian.description = _(
+            "An enigmatic Jokometian with a unique blend of traits."
+        )
+        jokometian.image_url = settings.STATIC_URL + "images/jokometians/default.svg"
 
-
-def determine_offense_rates_for_evaluation(evaluations):
-    # Initialize a dictionary to hold offense rates
-    offense_rates = {
-        'race_rate': 0,
-        'religion_rate': 0,
-        'ethnicity_rate': 0,
-        'gender_rate': 0,
-        'sexual_orientation_rate': 0,
-        'disability_rate': 0,
-        'violence_rate': 0,
-        'no_offense_rate': 100  # Assuming a base rate for no offense
-    }
-
-    # Initialize a counter for liked evaluations
-    total_liked = 0
-
-    # Process each evaluation in the list
-    for evaluation in evaluations:
-        if evaluation.liked:
-            total_liked += 1
-            offense_type = evaluation.joke.offense_type.lower() + '_rate'
-            if offense_type in offense_rates:
-                offense_rates[offense_type] += 1
-
-    # Calculate rates for each offense type based on liked evaluations
-    if total_liked > 0:
-        for offense_type in offense_rates.keys():
-            # Calculate and update offense rates
-            # Exclude 'no_offense_rate' from direct calculation
-            if offense_type != 'no_offense_rate':
-                offense_rates[offense_type] = (
-                    offense_rates[offense_type] / total_liked) * 100
-
-        # Adjust 'no_offense_rate' based on other rates
-        # Exclude the initial no_offense_rate
-        total_rates = sum(offense_rates.values()) - \
-            offense_rates['no_offense_rate']
-        offense_rates['no_offense_rate'] = max(0, 100 - total_rates)
-
-    return offense_rates
+    return jokometian

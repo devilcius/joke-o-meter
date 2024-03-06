@@ -6,18 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0004_auto_20240229_1758'),
+        ("api", "0004_auto_20240229_1758"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='joke',
-            name='offense_degree',
+            model_name="joke",
+            name="offense_degree",
             field=models.IntegerField(),
         ),
         migrations.AlterField(
-            model_name='joke',
-            name='offense_type',
-            field=models.CharField(choices=[('RACE', 'Race'), ('RELIGION', 'Religion'), ('ETHNICITY', 'Ethnicity'), ('GENDER', 'Gender'), ('SEXUAL_ORIENTATION', 'Sexual Orientation'), ('DISABILITY', 'Disability')], max_length=50),
+            model_name="joke",
+            name="offense_type",
+            field=models.CharField(
+                choices=[
+                    ("RACE", "Race"),
+                    ("RELIGION", "Religion"),
+                    ("ETHNICITY", "Ethnicity"),
+                    ("GENDER", "Gender"),
+                    ("SEXUAL_ORIENTATION", "Sexual Orientation"),
+                    ("DISABILITY", "Disability"),
+                ],
+                max_length=50,
+            ),
         ),
     ]

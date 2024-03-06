@@ -6,13 +6,25 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0006_alter_joke_offense_type'),
+        ("api", "0006_alter_joke_offense_type"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='joke',
-            name='offense_type',
-            field=models.CharField(choices=[('RACE', 'Race'), ('RELIGION', 'Religion'), ('ETHNICITY', 'Ethnicity'), ('GENDER', 'Gender'), ('SEXUAL_ORIENTATION', 'Sexual Orientation'), ('DISABILITY', 'Disability'), ('NO_OFFENSE_FOUND', 'No Offense Found')], max_length=50, null=True),
+            model_name="joke",
+            name="offense_type",
+            field=models.CharField(
+                choices=[
+                    ("RACE", "Race"),
+                    ("RELIGION", "Religion"),
+                    ("ETHNICITY", "Ethnicity"),
+                    ("GENDER", "Gender"),
+                    ("SEXUAL_ORIENTATION", "Sexual Orientation"),
+                    ("DISABILITY", "Disability"),
+                    ("NO_OFFENSE_FOUND", "No Offense Found"),
+                ],
+                max_length=50,
+                null=True,
+            ),
         ),
     ]

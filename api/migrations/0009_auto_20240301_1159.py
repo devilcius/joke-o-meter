@@ -6,18 +6,31 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0008_joke_language'),
+        ("api", "0008_joke_language"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='jokesevaluation',
-            old_name='positive',
-            new_name='liked',
+            model_name="jokesevaluation",
+            old_name="positive",
+            new_name="liked",
         ),
         migrations.AlterField(
-            model_name='joke',
-            name='offense_type',
-            field=models.CharField(choices=[('RACE', 'Race'), ('RELIGION', 'Religion'), ('ETHNICITY', 'Ethnicity'), ('GENDER', 'Gender'), ('SEXUAL_ORIENTATION', 'Sexual Orientation'), ('DISABILITY', 'Disability'), ('VIOLENCE', 'Generic Violence'), ('NO_OFFENSE_FOUND', 'No Offense Found')], max_length=50, null=True),
+            model_name="joke",
+            name="offense_type",
+            field=models.CharField(
+                choices=[
+                    ("RACE", "Race"),
+                    ("RELIGION", "Religion"),
+                    ("ETHNICITY", "Ethnicity"),
+                    ("GENDER", "Gender"),
+                    ("SEXUAL_ORIENTATION", "Sexual Orientation"),
+                    ("DISABILITY", "Disability"),
+                    ("VIOLENCE", "Generic Violence"),
+                    ("NO_OFFENSE_FOUND", "No Offense Found"),
+                ],
+                max_length=50,
+                null=True,
+            ),
         ),
     ]
