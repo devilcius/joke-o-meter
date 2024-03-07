@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Joke, JokeEvaluation, OffenseTrait
+from .models import Joke, JokeEvaluation, OffenseTrait, JokometianRanking
 
 
 class JokeSerializer(serializers.ModelSerializer):
@@ -42,3 +42,9 @@ class JokometianSerializer(serializers.Serializer):
         # Use the OffenseTraitSerializer to serialize the traits
         serializer = OffenseTraitSerializer(instance=obj.traits, many=True)
         return serializer.data
+
+
+class JokometianRankingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JokometianRanking
+        fields = ["name", "score", "image_url"]

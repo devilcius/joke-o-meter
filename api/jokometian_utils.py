@@ -1,7 +1,9 @@
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
-from .models import OffenseTrait
+from .models import OffenseTrait, JokometianRanking
 from .dtos import Jokometian
+from django.db import transaction
+from django.db.models import F
 
 trait_names = {
     OffenseTrait.RACE: _("Fiery"),
@@ -96,7 +98,7 @@ def create_jokometian_from_jokes_evaluation(evaluations):
     if dominant_traits:
         # Set additional properties based on dominant traits
         dominant_trait = dominant_traits[0]
-        jokometian.name = trait_names.get(dominant_trait.name, "Jokometian")
+        jokometian.name = dominant_trait.name
         jokometian.description = trait_descriptions.get(
             dominant_trait.name,
             "An enigmatic Jokometian with a unique blend of traits.",
@@ -113,3 +115,29 @@ def create_jokometian_from_jokes_evaluation(evaluations):
         jokometian.image_url = settings.STATIC_URL + "images/jokometians/default.svg"
 
     return jokometian
+
+
+def update_jokometian_ranking(evaluations):
+
+    # Create a Jokometian from the evaluations
+    jokometian = create_jokometian_from_jokes_evaluation(evaluations)
+
+    # Calculate the total score from the jokometian's traits
+    total_score = sum(trait.degree for trait in jokometian.traits)
+
+    with transaction.atomic():
+        # Retrieve or create the JokometianRanking instance
+        ranking, created = JokometianRanking.objects.get_or_create(
+            name=jokometian.name,
+            defaults={
+                "image_url": jokometian.image_url,  # Set during creation
+                "score": total_score,  # Initial score set for new creation
+            },
+        )
+
+        if not created:
+            # For existing rankings, update both score and image_url
+            ranking.score = F("score") + total_score
+            # Updating image_url for existing instances
+            ranking.image_url = jokometian.image_url
+            ranking.save()

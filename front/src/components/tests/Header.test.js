@@ -25,6 +25,8 @@ describe('Header Component', () => {
     expect(brandName).toBeInTheDocument();
     // Check if the "Instructions" link becomes active when clicked
     const instructionsLink = component.getByText(i18n.getDataByLanguage('en').translation['welcome.instructions']);
+    // Check if the "Ranking" link is rendered correctly
+    expect(component.getByText(i18n.getDataByLanguage('en').translation['ranking.title'])).toBeDefined();
     await act(async () => {
       instructionsLink.click();
     });

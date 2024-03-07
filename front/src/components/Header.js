@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import { t } from 'i18next';
+import '../css/Header.css';
 
 const Header = () => {
 
   const [active, setActive] = useState('home');
-
+  
   return (
     <Navbar >
       <Container>
@@ -24,6 +25,9 @@ const Header = () => {
             <Nav.Link as={Link} to="/instructions" eventKey="instructions" role="link" >
               {t('welcome.instructions')}
             </Nav.Link>
+            <Nav.Link as={Link} to="/ranking" eventKey="ranking" role="link" >
+              {t('ranking.title')}
+            </Nav.Link>            
           </Nav>
         </Navbar.Collapse>
       </Container>

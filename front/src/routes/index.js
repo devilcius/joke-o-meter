@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import WelcomePage from '../components/WelcomePage';
 import JokesCardSwiper from '../components/JokesCardSwiper.js';
 import JokometianView from '../components/JokometianView';
+import JokometiansRanking from '../components/JokometiansRanking.js';
 import Instructions from '../components/Instructions';
 import Root from '../components/Root';
 
@@ -17,6 +18,7 @@ const AppRoutes = () => {
           <Route path="/swipe" element={<JokesCardSwiper/>} />
           <Route path="/instructions" element={<Instructions/>} />
           <Route path="/jokometian/:id" element={<JokometianView/>} />
+          <Route path="/ranking" element={<JokometiansRanking/>} />
         </Route>
       </Routes>
     </Router>

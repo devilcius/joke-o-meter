@@ -1,6 +1,15 @@
 from django.test import TestCase
-from api.models import Joke, OffenseTrait, JokeEvaluation, EvaluationSession
-from api.jokometian_utils import create_jokometian_from_jokes_evaluation
+from api.models import (
+    Joke,
+    OffenseTrait,
+    JokeEvaluation,
+    EvaluationSession,
+    JokometianRanking,
+)
+from api.jokometian_utils import (
+    create_jokometian_from_jokes_evaluation,
+    update_jokometian_ranking,
+)
 from django.conf import settings
 from django.test import override_settings
 
@@ -45,7 +54,7 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
         jokometian = create_jokometian_from_jokes_evaluation(evaluations)
 
         # Assert that Jokometian's name and description consider the dominant trait (Race in this case)
-        self.assertEqual(jokometian.name, "Fiery")
+        self.assertEqual(jokometian.name, OffenseTrait.RACE)
         self.assertIn("Born from the flames of challenge", jokometian.description)
         self.assertEqual(
             jokometian.image_url,
@@ -62,7 +71,7 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
         jokometian = create_jokometian_from_jokes_evaluation(evaluations)
 
         # Assert that Jokometian considers the NO_OFFENSE_FOUND trait when it's the only one liked
-        self.assertEqual(jokometian.name, "Pure Soul")
+        self.assertEqual(jokometian.name, OffenseTrait.NO_OFFENSE_FOUND)
         self.assertIn("An untainted soul", jokometian.description)
         self.assertEqual(
             jokometian.image_url,
@@ -105,4 +114,56 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
         )
         self.assertEqual(
             jokometian.image_url, settings.STATIC_URL + "images/jokometians/default.svg"
+        )
+
+    def test_create_new_jokometian_ranking(self):
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_race, liked=True
+        )
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_gender, liked=True
+        )
+        evaluations = JokeEvaluation.objects.all()
+
+        # Expected score is the sum of degrees from the liked traits
+        expected_score = self.race_trait.degree + self.gender_trait.degree
+        jokometian = create_jokometian_from_jokes_evaluation(evaluations)
+        # Call the function under test
+        update_jokometian_ranking(evaluations)
+
+        # Verify a new JokometianRanking was created with expected properties
+        self.assertEqual(JokometianRanking.objects.count(), 1)
+        ranking = JokometianRanking.objects.first()
+        self.assertIsNotNone(ranking)
+        self.assertEqual(ranking.score, expected_score)
+        self.assertEqual(ranking.image_url, jokometian.image_url)
+
+    def test_update_existing_jokometian_ranking(self):
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_race, liked=True
+        )
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_gender, liked=True
+        )
+        evaluations = JokeEvaluation.objects.all()
+        jokometian = create_jokometian_from_jokes_evaluation(evaluations)
+        # Create an initial JokometianRanking that should be updated
+        initial_ranking = JokometianRanking.objects.create(
+            name=jokometian.name, score=50, image_url="initial_image_url.png"
+        )
+
+        # Set up evaluations leading to an update of this ranking
+        evaluations = JokeEvaluation.objects.all()
+
+        # Call the function under test
+        update_jokometian_ranking(evaluations)
+        updated_score = (
+            initial_ranking.score + self.race_trait.degree + self.gender_trait.degree
+        )
+        # Refresh the ranking from the database and verify updates
+        initial_ranking.refresh_from_db()
+        self.assertEqual(JokometianRanking.objects.count(), 1)
+        self.assertEqual(initial_ranking.score, updated_score)
+        self.assertEqual(
+            initial_ranking.image_url, "/static/images/jokometians/image_race.svg"
         )

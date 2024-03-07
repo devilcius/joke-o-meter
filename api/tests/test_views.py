@@ -1,7 +1,15 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from api.models import Joke, JokeEvaluation, EvaluationSession, OffenseTrait
+from api.models import (
+    Joke,
+    JokeEvaluation,
+    EvaluationSession,
+    OffenseTrait,
+    JokometianRanking,
+)
+from api.jokometian_utils import create_jokometian_from_jokes_evaluation
+from api.serializers import JokometianRankingSerializer
 import uuid
 
 
@@ -167,6 +175,32 @@ class JokesEvaluationViewTest(APITestCase):
         # Verify that a Jokometian url is returned
         self.assertEqual(str(response.data["uuid"]), str(self.session.id))
 
+    def test_jokometian_ranking_creation_on_evaluation_post(self):
+        # Define the payload for the POST request
+        payload = [
+            {"joke": self.jokes[0].id, "liked": True, "session": str(self.session.id)},
+            {"joke": self.jokes[1].id, "liked": False, "session": str(self.session.id)},
+        ]
+        # Adjust 'jokes_evaluation' based on your actual URL name
+        url = reverse("evaluate-jokes")
+
+        # Make the POST request
+        response = self.client.post(url, payload, format="json")
+        evaluations = JokeEvaluation.objects.all()
+        jokometian = create_jokometian_from_jokes_evaluation(evaluations)
+
+        # Check if the response is as expected
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        # Verify that a JokometianRanking has been created or updated
+        self.assertEqual(JokometianRanking.objects.count(), 1)
+        ranking = JokometianRanking.objects.first()
+        self.assertIsNotNone(ranking)
+
+        self.assertEqual(ranking.name, jokometian.name)
+        self.assertGreater(ranking.score, 0)
+        self.assertEqual(ranking.image_url, jokometian.image_url)
+
 
 class JokometianDetailViewTest(APITestCase):
     @classmethod
@@ -221,3 +255,24 @@ class JokometianDetailViewTest(APITestCase):
 
         # Expected to fail due to not found error
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+class JokometianRankingListViewTests(APITestCase):
+    def setUp(self):
+        # Setup runs before each test method
+        JokometianRanking.objects.create(name="Jokemetian 1", score=1)
+        JokometianRanking.objects.create(name="Jokemetian 2", score=2)
+
+    def test_view_returns_all_rankings(self):
+        # Generate URL for the view
+        url = reverse("jokometian_rankings")
+        response = self.client.get(url)
+
+        # Fetch the data directly from the database
+        rankings = JokometianRanking.objects.all()
+        serializer = JokometianRankingSerializer(rankings, many=True)
+
+        # Check that the response status code is 200 OK
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # Check that the response data matches what's in the database
+        self.assertEqual(response.data, serializer.data)

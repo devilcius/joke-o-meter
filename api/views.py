@@ -1,11 +1,17 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Joke, EvaluationSession, JokeEvaluation, OffenseTrait
-from .serializers import JokeSerializer, JokeEvaluationSerializer, JokometianSerializer
+from .models import Joke, EvaluationSession, JokeEvaluation, JokometianRanking
+from .serializers import (
+    JokeSerializer,
+    JokeEvaluationSerializer,
+    JokometianSerializer,
+    JokometianRankingSerializer,
+)
 from rest_framework import status
-from django.shortcuts import get_object_or_404
-from .jokometian_utils import create_jokometian_from_jokes_evaluation
-import random
+from .jokometian_utils import (
+    create_jokometian_from_jokes_evaluation,
+    update_jokometian_ranking,
+)
 from django.utils.translation import get_language
 from .joke_utils import prepare_joke_list
 
@@ -37,10 +43,16 @@ class JokesEvaluationView(APIView):
         serializer = JokeEvaluationSerializer(data=request.data, many=True)
 
         if serializer.is_valid():
-            serializer.save()  # Save the evaluations
-            response = {
-                "uuid": serializer.validated_data[0]["session"].id,
-            }
+            saved_evaluations = serializer.save()  # Save and capture the evaluations
+
+            # Now, we pass these saved evaluations directly for ranking update
+            # Assuming the function accepts this directly
+            update_jokometian_ranking(saved_evaluations)
+
+            # Construct response using the session ID from one of the saved evaluations
+            session_id = saved_evaluations[0].session.id if saved_evaluations else None
+            response = {"uuid": session_id}
+
             return Response(response, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -61,4 +73,13 @@ class JokometianDetailView(APIView):
             )
         jokometian = create_jokometian_from_jokes_evaluation(evaluations)
         serializer = JokometianSerializer(jokometian)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class JokometianRankingListView(APIView):
+    def get(self, request, format=None):
+        # Fetch all JokometianRanking instances
+        rankings = JokometianRanking.objects.all()
+        serializer = JokometianRankingSerializer(rankings, many=True)
+
         return Response(serializer.data, status=status.HTTP_200_OK)

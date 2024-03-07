@@ -1,4 +1,10 @@
-from api.models import Joke, JokeEvaluation, EvaluationSession, OffenseTrait
+from api.models import (
+    Joke,
+    JokeEvaluation,
+    EvaluationSession,
+    OffenseTrait,
+    JokometianRanking,
+)
 from django.test import TestCase
 from django.test import TestCase
 
@@ -77,3 +83,59 @@ class JokesEvaluationModelTest(TestCase):
         evaluation = JokeEvaluation.objects.get(id=1)
         field_label = evaluation._meta.get_field("session").verbose_name
         self.assertEquals(field_label, "session")
+
+
+class JokometianRankingModelTest(TestCase):
+
+    def test_create_jokometian_ranking(self):
+        # Test creating a new JokometianRanking instance
+        ranking = JokometianRanking.objects.create(
+            name="Jokometian One", score=100, image_url="image_one_url.png"
+        )
+
+        # Verify the instance was created as expected
+        self.assertEqual(JokometianRanking.objects.count(), 1)
+        self.assertEqual(ranking.name, "Jokometian One")
+        self.assertEqual(ranking.score, 100)
+        self.assertEqual(ranking.image_url, "image_one_url.png")
+
+    def test_update_jokometian_ranking(self):
+        # Create and then update a JokometianRanking instance
+        ranking = JokometianRanking.objects.create(
+            name="Jokometian Two", score=50, image_url="image_two_url.png"
+        )
+        JokometianRanking.objects.filter(name="Jokometian Two").update(score=150)
+
+        # Fetch the updated instance and verify the update took place
+        updated_ranking = JokometianRanking.objects.get(name="Jokometian Two")
+        self.assertEqual(updated_ranking.score, 150)
+
+    def test_ordering_by_score(self):
+        # Create multiple JokometianRanking instances with different scores
+        JokometianRanking.objects.create(
+            name="Low Score", score=10, image_url="low_score_url.png"
+        )
+        JokometianRanking.objects.create(
+            name="High Score", score=200, image_url="high_score_url.png"
+        )
+        JokometianRanking.objects.create(
+            name="Medium Score", score=100, image_url="medium_score_url.png"
+        )
+
+        # Fetch all instances and verify they are ordered by score descending
+        rankings = JokometianRanking.objects.all()
+        self.assertEqual(rankings[0].name, "High Score")
+        self.assertEqual(rankings[1].name, "Medium Score")
+        self.assertEqual(rankings[2].name, "Low Score")
+
+    def test_unique_name_constraint(self):
+        # Verify that attempting to create a JokometianRanking with a duplicate name raises an error
+        JokometianRanking.objects.create(
+            name="Unique Name", score=123, image_url="unique_name_url.png"
+        )
+
+        # Adjust the exception type based on your database backend
+        with self.assertRaises(Exception):
+            JokometianRanking.objects.create(
+                name="Unique Name", score=456, image_url="another_unique_name_url.png"
+            )

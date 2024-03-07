@@ -54,3 +54,12 @@ class JokeEvaluation(models.Model):
     )
     joke = models.ForeignKey(Joke, on_delete=models.CASCADE)
     liked = models.BooleanField()
+
+
+class JokometianRanking(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    score = models.IntegerField(default=0)
+    image_url = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ["-score"]

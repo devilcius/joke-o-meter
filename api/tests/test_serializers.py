@@ -1,7 +1,11 @@
-from rest_framework.test import APITestCase
 from django.test import TestCase
-from api.models import Joke, OffenseTrait
-from api.serializers import JokeSerializer, JokometianSerializer, OffenseTraitSerializer
+from api.models import Joke, OffenseTrait, JokometianRanking
+from api.serializers import (
+    JokeSerializer,
+    JokometianSerializer,
+    OffenseTraitSerializer,
+    JokometianRankingSerializer,
+)
 from api.dtos import Jokometian
 
 
@@ -110,3 +114,37 @@ class JokometianSerializerTest(TestCase):
 
         # Test that the serializer data matches the expected data for an instance without traits
         self.assertEqual(serializer.data, expected_data)
+
+
+class JokometianRankingSerializerTest(TestCase):
+    def setUp(self):
+        self.jokometian_attributes = {
+            "name": "Test Joke",
+            "score": 5,
+            "image_url": "http://example.com/test.jpg",
+        }
+
+        self.serializer_data = {
+            "name": "Test Joke",
+            "score": 5,
+            "image_url": "http://example.com/test.jpg",
+        }
+
+        self.jokometian = JokometianRanking.objects.create(**self.jokometian_attributes)
+        self.serializer = JokometianRankingSerializer(instance=self.jokometian)
+
+    def test_contains_expected_fields(self):
+        data = self.serializer.data
+        self.assertEqual(set(data.keys()), set(["name", "score", "image_url"]))
+
+    def test_name_field_content(self):
+        data = self.serializer.data
+        self.assertEqual(data["name"], self.jokometian_attributes["name"])
+
+    def test_score_field_content(self):
+        data = self.serializer.data
+        self.assertEqual(data["score"], self.jokometian_attributes["score"])
+
+    def test_image_url_field_content(self):
+        data = self.serializer.data
+        self.assertEqual(data["image_url"], self.jokometian_attributes["image_url"])

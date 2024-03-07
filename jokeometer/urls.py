@@ -16,7 +16,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, re_path
-from api.views import JokeListView, JokesEvaluationView, JokometianDetailView
+from api.views import (
+    JokeListView,
+    JokesEvaluationView,
+    JokometianDetailView,
+    JokometianRankingListView,
+)
 from django.conf.urls import url
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -44,6 +49,11 @@ urlpatterns = [
         "api/jokometians/<uuid:uuid>/",
         JokometianDetailView.as_view(),
         name="jokometian-detail",
+    ),
+    path(
+        "api/jokometian-rankings/",
+        JokometianRankingListView.as_view(),
+        name="jokometian_rankings",
     ),
     # URL patterns for the Swagger UI
     re_path(

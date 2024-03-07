@@ -5,9 +5,11 @@ import { fetchJokometian } from '../api/jokometians';
 import { useTranslation } from 'react-i18next';
 import Card from 'react-bootstrap/Card';
 import JokometianTraits from './JokometianTraits';
+import { getJokometianTraitMapper } from '../utils/index';
 
 const JokometianView = () => {
     const { t } = useTranslation();
+    const TRAITS_MAPPER = getJokometianTraitMapper(t);
     const { id } = useParams();
     const [jokometian, setJokometian] = React.useState({});
 
@@ -31,7 +33,7 @@ const JokometianView = () => {
                 <Card.Header>{t('jokometian.title')}</Card.Header>
                 <Card.Img variant="top" src={jokometian.image_url} />
                 <Card.Body>
-                    <Card.Title>{jokometian.name}</Card.Title>
+                    <Card.Title>{TRAITS_MAPPER[jokometian.name].name}</Card.Title>
                     <Card.Text>
                         {jokometian.description}
                         <hr/>

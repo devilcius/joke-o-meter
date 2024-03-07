@@ -44,7 +44,7 @@ const JokesCardSwiper = () => {
     setJokesPayload([...jokesPayload, joke]);
     resetSwiping(); // Reset swipe effect
     if (jokesPayload.length + 1 === jokes.length) {
-      await new Promise(resolve => setTimeout(resolve, 20000));
+      await new Promise(resolve => setTimeout(resolve, 1000));
       await submitJokes();
     }
   };
