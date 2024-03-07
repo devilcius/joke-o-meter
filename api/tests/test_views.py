@@ -2,7 +2,6 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 from api.models import Joke, JokeEvaluation, EvaluationSession, OffenseTrait
-from api.dtos import Jokometian
 import uuid
 
 
@@ -10,8 +9,9 @@ class JokeListViewTest(APITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.session = EvaluationSession.objects.create()
-        # Create 20 jokes in English: 10 with NO_OFFENSE_FOUND and 10 with RACE
-        for i in range(10):
+        # Create 30 jokes in Spanish: 17 with NO_OFFENSE_FOUND and the rest with
+        # each of the other offense types
+        for i in range(17):
             offense_trait = OffenseTrait.objects.create(
                 name=OffenseTrait.NO_OFFENSE_FOUND, degree=i
             )
@@ -20,20 +20,21 @@ class JokeListViewTest(APITestCase):
                 trait=offense_trait,
                 language="es",
             )
-        for i in range(1, 20):
-            offense_trait = OffenseTrait.objects.create(
-                name=OffenseTrait.RACE, degree=i
-            )
-            Joke.objects.create(
-                content=f"Joke {i}",
-                trait=offense_trait,
-                language="es",
-            )
+        for trait in OffenseTrait.OFFENSE_TYPE_CHOICES:
+            if trait[0] == OffenseTrait.NO_OFFENSE_FOUND:
+                continue
+            for i in range(3):
+                offense_trait = OffenseTrait.objects.create(name=trait[0], degree=i)
+                Joke.objects.create(
+                    content=f"Joke {i}",
+                    trait=offense_trait,
+                    language="es",
+                )
 
         # Create additional jokes in another language for testing language filtering
         for i in range(5):
             offense_trait = OffenseTrait.objects.create(
-                name=OffenseTrait.DISABILITY, degree=i
+                name=OffenseTrait.DISABILITY, degree=(i + 26)
             )
             Joke.objects.create(
                 content=f"Chiste {i}",
@@ -59,7 +60,7 @@ class JokeListViewTest(APITestCase):
         self.assertIsInstance(session_uuid, uuid.UUID)
         # Now check the jokes part of the response
         jokes_data = response.data["jokes"]
-        self.assertEqual(len(jokes_data), 25)
+        self.assertEqual(len(jokes_data), 20)
         for joke_data in jokes_data:
             self.assertIn("id", joke_data)
             self.assertIn("content", joke_data)
@@ -69,7 +70,7 @@ class JokeListViewTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue("session" in response.data)
         self.assertTrue("jokes" in response.data)
-        self.assertEqual(len(response.data["jokes"]), 25)
+        self.assertEqual(len(response.data["jokes"]), 20)
         # Verify the session UUID format
         session_uuid = response.data["session"]
         self.assertIsInstance(session_uuid, uuid.UUID)
@@ -100,9 +101,8 @@ class JokeListViewTest(APITestCase):
         response = self.client.get(reverse("joke-list"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         jokes_data = response.data["jokes"]
-
-        # Verify that 25 jokes are returned
-        self.assertEqual(len(jokes_data), 25, "Should return exactly 25 jokes.")
+        # Verify that 20 jokes are returned
+        self.assertEqual(len(jokes_data), 20, "Should return exactly 20 jokes.")
 
         # Count NO_OFFENSE_FOUND jokes
         no_offense_jokes = [
@@ -112,8 +112,8 @@ class JokeListViewTest(APITestCase):
         ]
         self.assertEqual(
             len(no_offense_jokes),
-            10,
-            "Should return exactly 10 jokes with NO_OFFENSE_FOUND.",
+            6,
+            "Should return exactly 6 jokes with NO_OFFENSE_FOUND.",
         )
 
 

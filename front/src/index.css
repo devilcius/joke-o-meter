@@ -1,0 +1,6 @@
+body {
+  font-family: 'Chela One', system-ui !important;
+}
+#jokeometer {
+  height: 100vh;
+}

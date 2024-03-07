@@ -1,0 +1,76 @@
+#card-swiper-container {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    padding: 20px 0;
+}
+
+#card-swiper-container>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-swipe {
+    position: absolute;
+    height: 1000px;
+    user-select: none;
+}
+
+.card-container {
+    width: 90vw;
+    height: 1000px;
+}
+
+.joke-card {
+    position: relative;
+    width: 80vw;
+    height: 1000px;
+    background-color: beige;
+    box-shadow: 1px 0px 5px 0px #ccc;
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+/* for bigger screens */
+@media (min-width: 768px) {
+    .card-container {
+        width: 50vw;
+        height: 300px;
+    }    
+    .joke-card {
+        width: 40vw;
+        height: 300px;
+    }
+    .card-swipe {
+        height: 300px;
+    }
+}
+.joke-card p {
+    user-select: none !important;
+}
+
+.card-swipe:last-of-type {
+    box-shadow: 1px 0px 5px 0px #ccc;
+}
+
+.joke-card p {
+    padding: 20px;
+    text-align: left;
+    font-family: 'Fredoka', system-ui !important;
+    font-size: 1.2rem;
+}
+
+.no-more-cards {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-family: 'Fredoka', system-ui !important;
+    color: #ccc;
+}

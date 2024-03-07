@@ -56,15 +56,15 @@ msgstr "Nacido de las llamas del desafío, siempre listo para encender el cambio
 
 #: api/jokometian_utils.py:19
 msgid "With a deep spiritual connection, seeking harmony in all."
-msgstr "con una profunda conexión espiritual, buscando la armonía en todo."
+msgstr "Con una profunda conexión espiritual, buscando la armonía en todo."
 
 #: api/jokometian_utils.py:20
 msgid "Celebrating diversity, embodying the beauty of all cultures."
-msgstr "celebrando la diversidad, encarnando la belleza de todas las culturas."
+msgstr "Celebrando la diversidad, encarnando la belleza de todas las culturas."
 
 #: api/jokometian_utils.py:21
 msgid "Imbued with wisdom, understanding the balance of power."
-msgstr "impregnado de sabiduría, comprendiendo el equilibrio del poder."
+msgstr "Impregnado de sabiduría, comprendiendo el equilibrio del poder."
 
 #: api/jokometian_utils.py:22
 msgid "Radiating acceptance, embracing all forms of love."
@@ -72,7 +72,7 @@ msgstr "radiando aceptación, abrazando todas las formas de amor."
 
 #: api/jokometian_utils.py:23
 msgid "Showing unmatched resilience, overcoming every obstacle."
-msgstr "mostrando una resiliencia inigualable, superando cada obstáculo."
+msgstr "Mostrando una resiliencia inigualable, superando cada obstáculo."
 
 #: api/jokometian_utils.py:24
 msgid "Fierce in the face of adversity, a warrior of light."
@@ -80,7 +80,7 @@ msgstr "Feroz ante la adversidad, un guerrero de la luz."
 
 #: api/jokometian_utils.py:25
 msgid "An untainted soul, spreading joy and laughter wherever they go."
-msgstr "un alma pura, esparciendo alegría y risas dondequiera que vaya."
+msgstr "Un alma pura, esparciendo alegría y risas dondequiera que vaya."
 
 #: api/jokometian_utils.py:77
 msgid "An enigmatic Jokometian with a unique blend of traits."

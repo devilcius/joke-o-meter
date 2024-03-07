@@ -1,0 +1,52 @@
+/* WelcomePage.css */
+.welcome-page {
+    height: 100vh;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+}
+
+.welcome-page H1 {
+    font-family: 'Fredoka', system-ui !important;
+    padding: 8px;
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    z-index: -1;
+}
+/* for bigger screens */
+@media (min-width: 768px) {
+    .background-image {
+        height: 100%;
+    }
+}
+
+.play-button-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.play-button {
+    margin-top: -80%
+
+}
+/* for bigger screens */
+@media (min-width: 768px) {
+    .play-button {
+        font-size: 2rem !important;
+        padding: 8px 16px !important;
+        border-radius: 8px !important;
+        margin-top: 0 !important;
+    }
+}
+
+.footer {
+    text-align: center;
+    margin-top: auto;
+}

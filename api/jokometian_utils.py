@@ -97,10 +97,9 @@ def create_jokometian_from_jokes_evaluation(evaluations):
         # Set additional properties based on dominant traits
         dominant_trait = dominant_traits[0]
         jokometian.name = trait_names.get(dominant_trait.name, "Jokometian")
-        jokometian.description = ". ".join(
-            str(trait_descriptions[trait.name])
-            for trait in dominant_traits
-            if trait.name in trait_descriptions
+        jokometian.description = trait_descriptions.get(
+            dominant_trait.name,
+            "An enigmatic Jokometian with a unique blend of traits.",
         )
         jokometian.image_url = trait_images.get(
             dominant_trait.name, settings.STATIC_URL + "images/jokometians/default.svg"

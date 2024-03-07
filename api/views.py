@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from .jokometian_utils import create_jokometian_from_jokes_evaluation
 import random
 from django.utils.translation import get_language
-from django.urls import reverse
+from .joke_utils import prepare_joke_list
 
 
 class JokeListView(APIView):
@@ -18,45 +18,16 @@ class JokeListView(APIView):
         # Get the current language set in Django's settings
         current_language = get_language()
 
-        # Filter jokes by current language
-        jokes_language_filtered = Joke.objects.filter(language=current_language)
-
-        # Separate NO_OFFENSE_FOUND jokes and others
-        # filter all jokes with NO_OFFENSE_FOUND trait
-        no_offense_jokes = list(
-            jokes_language_filtered.filter(trait__name=OffenseTrait.NO_OFFENSE_FOUND)
-        )
-        other_jokes = list(
-            jokes_language_filtered.exclude(trait__name=OffenseTrait.NO_OFFENSE_FOUND)
-        )
-
-        # Randomly select 10 NO_OFFENSE_FOUND jokes, ensuring not to exceed the list size
-        no_offense_selection = random.sample(
-            no_offense_jokes, min(len(no_offense_jokes), 10)
-        )
-
-        # Determine how many more jokes are needed to make up the total of 25
-        remaining_joke_count = 25 - len(no_offense_selection)
-
-        # Randomly select the remaining jokes from other types
-        other_jokes_selection = random.sample(
-            other_jokes, min(len(other_jokes), remaining_joke_count)
-        )
-
-        # Combine the two selections
-        selected_jokes = no_offense_selection + other_jokes_selection
+        joke_list = prepare_joke_list(current_language)
 
         # Serialize the selected jokes
-        serializer = JokeSerializer(selected_jokes, many=True)
-
-        # Shuffle the jokes
-        shuffled_jokes = random.sample(serializer.data, len(serializer.data))
+        serializer = JokeSerializer(joke_list, many=True)
 
         # Include the session UUID in the response
         return Response(
             {
                 "session": session.id,  # Send the UUID to the client
-                "jokes": shuffled_jokes,
+                "jokes": serializer.data,
             }
         )
 
