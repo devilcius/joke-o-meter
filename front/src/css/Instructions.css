@@ -17,3 +17,10 @@
 .swipe-animation {
   animation: swipeRightLeft 2s ease-in-out infinite;
 }
+
+.jokeometer-instuctions {
+  font-family: 'Fredoka', system-ui !important;
+}
+.jokeometer-instuctions h1, h2 {
+  font-family: 'Chela One', system-ui !important;
+}

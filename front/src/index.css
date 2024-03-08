@@ -1,6 +1,15 @@
 body {
   font-family: 'Chela One', system-ui !important;
+  margin-bottom: 150px !important;
 }
 #jokeometer {
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  width: 100%;
+  bottom: 0;
+  margin-top: 20px;
 }

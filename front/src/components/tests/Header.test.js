@@ -17,7 +17,7 @@ describe('Header Component', () => {
       </I18nextProvider>
     );
     // Check if the "Play" link is rendered correctly
-    expect(component.getByText(i18n.getDataByLanguage('en').translation['welcome.play'])).toBeDefined();
+    expect(component.getByText(i18n.getDataByLanguage('en').translation['welcome.start'])).toBeDefined();
     // Check if the "Instructions" link is rendered correctly
     expect(component.getByText(i18n.getDataByLanguage('en').translation['welcome.instructions'])).toBeDefined();
     // Check if the brand name is rendered correctly

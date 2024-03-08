@@ -19,8 +19,8 @@ const Header = () => {
             activeKey={active}
             onSelect={(selectedKey) => setActive(selectedKey)}
           >
-            <Nav.Link as={Link} to="/swipe" eventKey="play" role="link" >
-              {t('welcome.play')}
+            <Nav.Link as={Link} to="/swipe" eventKey="swipe" role="link" >
+              {t('welcome.start')}
             </Nav.Link>
             <Nav.Link as={Link} to="/instructions" eventKey="instructions" role="link" >
               {t('welcome.instructions')}

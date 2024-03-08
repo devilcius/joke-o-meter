@@ -116,7 +116,7 @@ class JokeListViewTest(APITestCase):
         no_offense_jokes = [
             joke
             for joke in jokes_data
-            if joke["trait"] == OffenseTrait.NO_OFFENSE_FOUND
+            if joke["trait"]["name"] == OffenseTrait.NO_OFFENSE_FOUND
         ]
         self.assertEqual(
             len(no_offense_jokes),

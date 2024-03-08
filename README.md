@@ -11,6 +11,7 @@ The Joke-O-Meter is a web application designed to entertain users by presenting 
 - Rate jokes as like or dislike.
 - Receive a personalized Jokometian character based on joke preferences.
 - Share your Jokometian character with others.
+- Jokometians ranking
 
 ## Installation
 
@@ -49,10 +50,12 @@ The Joke-O-Meter is a web application designed to entertain users by presenting 
    ```sh
    python manage.py migrate
    ```
+6. Run and compile translations
+   ```sh   
+   django-admin compilemessages
+   ```
 
 ### Frontend Setup
-
->Under development
 
 1. Navigate to the `front` directory:
    ```sh
@@ -88,3 +91,72 @@ The Joke-O-Meter is a web application designed to entertain users by presenting 
 ## API Documentation
 
 Refer to `http://localhost:8000/swagge/` for detailed API documentation.
+
+## Localization
+
+The application currently supports English and Spanish. To add additional languages, follow the steps below. This example demonstrates adding French.
+
+### Back-End
+
+1. **Generate Message Files**: Run the following command to generate the `.po` file for the new language (French, in this example):
+
+   ```sh
+   django-admin makemessages -l fr
+   ```
+
+2. **Translate Messages**: Open the generated file located at `/locale/fr/LC_MESSAGES/django.po`. Translate the message strings from English to French, filling in the corresponding 'msgstr' for each 'msgid'.
+
+3. **Compile Messages**: After translating, compile the messages to apply the translations using:
+
+   ```sh
+   django-admin compilemessages
+   ```
+
+### Front-End
+
+For front-end localization:
+
+1. **Add Language File**: Create a new language file for your translations,  `translation.json`, in the translations folder (e.g., `/locales/fr/translation.json`).
+
+2. **Translate Content**: Fill `fr.json` with the translations. Use the existing English (or Spanish) translations as a reference. The file structure typically follows a key-value format, where keys match those used in your React components:
+
+   ```json
+   {
+     "welcome": "Bienvenue",
+     "description": "Ceci est une application localisée"
+   }
+   ```
+
+3. **Configure i18n**: Ensure your i18n configuration includes the new language. This typically involves adding the new language to the list of available languages and possibly setting a detection order if you're using language detection:
+
+   ```javascript
+   i18n.use(initReactI18next).init({
+     resources,
+     lng: "en", // Default language
+     fallbackLng: "en",
+     whitelist: ["en", "es", "fr"], // Available languages
+     interpolation: {
+       escapeValue: false
+     }
+   });
+   ```
+
+Certainly, adding a **TODO** section to your README.md can help track future enhancements and important tasks that need attention. Here's how you could structure this section to highlight the areas for improvement mentioned:
+
+## TODO
+
+### UI Improvements
+
+- **Responsive Design**: Ensure the application is fully responsive and provides an optimal viewing experience across a range of devices, including tablets and smartphones.
+- **User Interface Polish**: Review and refine the UI elements for better visual appeal and usability. This includes button styles, form inputs, and navigation components.
+
+### Front-End Testing
+
+- **Component Tests**: Expand the suite of React component tests to cover all user interactions and edge cases.
+- **Integration Tests**: Develop front-end integration tests that simulate real user scenarios and interactions within the application. This will help ensure that the front-end components work seamlessly together.
+
+### Accessibility
+
+- **Keyboard Navigation**: Improve keyboard navigation within the application to ensure that all interactive elements are accessible without the use of a mouse.
+
+Contributions to address these tasks are highly valued.

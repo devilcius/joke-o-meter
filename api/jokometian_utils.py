@@ -63,9 +63,14 @@ trait_images = {
 def create_jokometian_from_jokes_evaluation(evaluations):
     # Initialize a list to keep track of aggregated OffenseTrait objects
     aggregated_traits = []
+    liked_jokes = []
 
     for eval in evaluations:
         if eval.liked:
+            # Add the liked joke to the liked_jokes list
+            if eval.joke not in liked_jokes:
+                liked_jokes.append(eval.joke)
+
             existing_trait = next(
                 (t for t in aggregated_traits if t.name == eval.joke.trait.name), None
             )
@@ -85,6 +90,10 @@ def create_jokometian_from_jokes_evaluation(evaluations):
     ]
     if len(aggregated_traits) > 1 and no_offense_found_trait:
         aggregated_traits.remove(no_offense_found_trait[0])
+        # remove also from liked jokes
+        liked_jokes = [
+            j for j in liked_jokes if j.trait.name != OffenseTrait.NO_OFFENSE_FOUND
+        ]
 
     # Sort the traits by their aggregated degree to find the top traits
     dominant_traits = sorted(aggregated_traits, key=lambda t: t.degree, reverse=True)
@@ -94,6 +103,7 @@ def create_jokometian_from_jokes_evaluation(evaluations):
     # Creating the Jokometian instance with the top dominant traits
     jokometian = Jokometian()
     jokometian.traits = dominant_traits
+    jokometian.jokes = liked_jokes
 
     if dominant_traits:
         # Set additional properties based on dominant traits

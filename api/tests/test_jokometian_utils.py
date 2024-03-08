@@ -37,6 +37,9 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
         cls.joke_with_no_offense = Joke.objects.create(
             content="No offense joke", trait=cls.no_offense_trait
         )
+        cls.joke_with_disability = Joke.objects.create(
+            content="Disability joke", trait=cls.no_offense_trait
+        )
 
         # Create an evaluation session
         cls.session = EvaluationSession.objects.create()
@@ -167,3 +170,35 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
         self.assertEqual(
             initial_ranking.image_url, "/static/images/jokometians/image_race.svg"
         )
+
+    def test_jokometian_includes_liked_jokes_only(self):
+        # Create evaluations, mixing liked and not liked
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_race, liked=True
+        )
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_gender, liked=False
+        )  # Not liked
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_no_offense, liked=True
+        )
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_disability, liked=True
+        )
+
+        # Fetch all evaluations for the session
+        evaluations = JokeEvaluation.objects.filter(session=self.session)
+
+        # Generate the Jokometian
+        jokometian = create_jokometian_from_jokes_evaluation(evaluations)
+
+        # Assert that Jokometian includes only the liked jokes
+        self.assertIn(self.joke_with_race, jokometian.jokes)
+        # This joke was not liked
+        self.assertNotIn(self.joke_with_gender, jokometian.jokes)
+        # Since jokes with NO_OFFENSE_FOUND trait are not included in the dominant traits
+        # when another offense trait is liked, this joke is not included
+        self.assertNotIn(self.joke_with_no_offense, jokometian.jokes)
+
+        # Additionally, check the length of the jokes list matches the number of liked jokes
+        self.assertEqual(len(jokometian.jokes), 1)

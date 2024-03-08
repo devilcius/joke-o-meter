@@ -13,7 +13,7 @@ const WelcomePage = () => {
             <img className="background-image" src="/pure_soul_jokometian.svg" alt="background logo" />
             <div className="play-button-container">
                 <Button variant="primary" className="play-button" size="lg" href="#play" as={Link} to="/swipe">
-                    {t('welcome.play')}
+                    {t('welcome.start')}
                 </Button>
             </div>
         </div>

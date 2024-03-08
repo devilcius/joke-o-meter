@@ -8,9 +8,9 @@ import '../css/Instructions.css';
 const Instructions = () => {
     const { t } = useTranslation();
     return (
-        <Container className="text-center my-4">
+        <Container className="my-4 jokeometer-instuctions">
             <h1>{t('instructions.title')}</h1>
-            <Row className="align-items-center my-3">
+            <Row className="text-center align-items-center my-3">
                 <Col >
                     <FontAwesomeIcon icon={faFrownOpen} size="3x" color="red" />
                 </Col>
@@ -18,7 +18,7 @@ const Instructions = () => {
                     <FontAwesomeIcon icon={faSmileBeam} size="3x" color="green" />
                 </Col>
             </Row>
-            <Row lg="10" className='align-items-center my-3'>
+            <Row lg="10" className='text-center align-items-center my-3'>
                 <Col>
                     <FontAwesomeIcon icon={faHandPointer} size="3x" className="swipe-animation" />
                 </Col>
@@ -33,7 +33,13 @@ const Instructions = () => {
                 <Col >
                     <p>{t('instructions.goal.description')}</p>
                 </Col>
-            </Row>            
+            </Row>
+            <h2>{t('instructions.motivation.title')}</h2>
+            <Row>
+                <Col>
+                    <p>{t('instructions.motivation.description')}</p>
+                </Col>
+            </Row>
         </Container>
     );
 }

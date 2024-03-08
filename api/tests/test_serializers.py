@@ -31,10 +31,11 @@ class JokeSerializerTest(TestCase):
         Test serialization of a Joke instance that has an associated trait.
         """
         serializer = JokeSerializer(instance=self.joke_with_trait)
+        trait_serializer = OffenseTraitSerializer(instance=self.trait_with_name)
         expected_data = {
             "id": self.joke_with_trait.id,
             "content": "Why did the chicken cross the road?",
-            "trait": "Humor",
+            "trait": trait_serializer.data,
         }
 
         self.assertEqual(serializer.data, expected_data)
@@ -72,10 +73,18 @@ class JokometianSerializerTest(TestCase):
         # Create some OffenseTrait instances for use in tests
         cls.trait1 = OffenseTrait.objects.create(name=OffenseTrait.RACE, degree=5)
         cls.trait2 = OffenseTrait.objects.create(name=OffenseTrait.GENDER, degree=3)
+        cls.joke1 = Joke.objects.create(
+            content="Test Joke 1", trait=cls.trait1, language="en"
+        )
+        cls.joke2 = Joke.objects.create(
+            content="Test Joke 2", trait=cls.trait2, language="en"
+        )
 
     def test_jokometian_serializer_with_traits(self):
-        # Create a Jokometian instance with traits
-        jokometian = Jokometian(traits=[self.trait1, self.trait2])
+        # Create a Jokometian instance with traits and jokes
+        jokometian = Jokometian(
+            traits=[self.trait1, self.trait2], jokes=[self.joke1, self.joke2]
+        )
 
         # Serialize the Jokometian instance
         serializer = JokometianSerializer(instance=jokometian)
@@ -84,10 +93,15 @@ class JokometianSerializerTest(TestCase):
             instance=[self.trait1, self.trait2], many=True
         ).data
 
+        serialized_jokes = JokeSerializer(
+            instance=[self.joke1, self.joke2], many=True
+        ).data
+
         # Expected data format
         expected_data = {
             "id": str(jokometian.id),
             "traits": serialized_traits,
+            "jokes": serialized_jokes,
             "name": "",
             "description": "",
             "image_url": "",
@@ -97,7 +111,7 @@ class JokometianSerializerTest(TestCase):
         self.assertEqual(serializer.data, expected_data)
 
     def test_jokometian_serializer_empty_traits(self):
-        # Create a Jokometian instance without traits
+        # Create a Jokometian instance without traits nor jokes
         jokometian = Jokometian()
 
         # Serialize the Jokometian instance
@@ -107,6 +121,7 @@ class JokometianSerializerTest(TestCase):
         expected_data = {
             "id": str(jokometian.id),
             "traits": [],  # No traits
+            "jokes": [],  # No jokes
             "name": "",
             "description": "",
             "image_url": "",
