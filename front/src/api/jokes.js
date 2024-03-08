@@ -1,10 +1,6 @@
 import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-// if debug mode set HTTP_ACCEPT_LANGUAGE header to es
-if (process.env.NODE_ENV === 'development') {
-  axios.defaults.headers.common['Accept-Language'] = 'es';
-}
 // Get all jokes
 export const fetchJokes = async () => {
   try {

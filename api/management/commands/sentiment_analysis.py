@@ -1,12 +1,21 @@
 from openai import OpenAI
 from django.core.management.base import BaseCommand
-from api.models import Joke
+from api.models import Joke, OffenseTrait
 import time
 import json
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
+
+LANGUAGE = "en"
+LANGUAGE_MAPPING = {
+    "es": "Spanish",
+    "en": "English",
+    "fr": "French",
+    "it": "Italian",
+    "pt": "Portuguese",
+}
 
 
 class Command(BaseCommand):
@@ -23,7 +32,7 @@ class Command(BaseCommand):
         self.stdout.write("Process completed.")
 
     def fill_sentiment_fields(self):
-        jokes = Joke.objects.filter(offense_type__isnull=True)
+        jokes = Joke.objects.filter(trait__isnull=True, language=LANGUAGE)
         for joke in jokes:
             self.stdout.write(f"Processing joke {joke.id}")
             self.fill_sentimient_fields_for_joke(joke)
@@ -37,7 +46,7 @@ class Command(BaseCommand):
             {
                 "role": "system",
                 "content": f"""
-                        You will act as a sentiment analyst specializing in identifying potentially offensive content in jokes. Upon receiving a {joke.language} joke, analyze its content and generate a response in JSON format. This response should contain two key properties: offense_degree and offense_type.
+                        You will act as a sentiment analyst specializing in identifying potentially offensive content in jokes. Upon receiving a {LANGUAGE_MAPPING[joke.language]} joke, analyze its content and generate a response in JSON format. This response should contain two key properties: offense_degree and offense_type.
 
                         1. offense_degree: Assign an integer value from 1 to 10, where 1 represents the least offensive and 10 represents the most offensive content.
 
@@ -72,9 +81,12 @@ class Command(BaseCommand):
         ]
         # Generate the sentiment
         degree, type = self.generate_sentimient(messages)
+        # Create the trait if it doesn't exist
+        trait, created = OffenseTrait.objects.get_or_create(
+            name=type, degree=degree
+        )
         # Save the joke
-        joke.offense_degree = degree
-        joke.offense_type = type
+        joke.trait = trait
         joke.save()
 
     def generate_sentimient(self, messages):

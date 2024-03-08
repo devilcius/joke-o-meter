@@ -19,15 +19,15 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'es',
+    fallbackLng: 'en',
     debug: false,
+    detection: {
+      order: ['navigator', 'htmlTag', 'querystring', 'cookie', 'localStorage', 'path', 'subdomain'],
+      caches: ['localStorage', 'cookie'], // Where to store the detected language
+    },    
     interpolation: {
       escapeValue: false,
     }
   });
-// if debug set language to es
-if (process.env.NODE_ENV === 'development') {
-  i18n.changeLanguage('es');
-}
 
 export default i18n;
