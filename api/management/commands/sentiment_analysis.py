@@ -82,9 +82,7 @@ class Command(BaseCommand):
         # Generate the sentiment
         degree, type = self.generate_sentimient(messages)
         # Create the trait if it doesn't exist
-        trait, created = OffenseTrait.objects.get_or_create(
-            name=type, degree=degree
-        )
+        trait, created = OffenseTrait.objects.get_or_create(name=type, degree=degree)
         # Save the joke
         joke.trait = trait
         joke.save()
