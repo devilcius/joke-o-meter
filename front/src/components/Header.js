@@ -7,11 +7,16 @@ import '../css/Header.css';
 const Header = () => {
 
   const [active, setActive] = useState('home');
-  
+
   return (
     <Navbar >
       <Container>
-        <Navbar.Brand as={Link} to="/" >Joke-O-Meter</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/" >
+          <img src='/logo192-black.png'
+            width="24" height="24"
+            alt="Logo" />
+          <span>Joke-O-Meter</span>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav
@@ -27,7 +32,7 @@ const Header = () => {
             </Nav.Link>
             <Nav.Link as={Link} to="/ranking" eventKey="ranking" role="link" >
               {t('ranking.title')}
-            </Nav.Link>            
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

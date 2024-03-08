@@ -104,6 +104,8 @@ def create_jokometian_from_jokes_evaluation(evaluations):
     jokometian = Jokometian()
     jokometian.traits = dominant_traits
     jokometian.jokes = liked_jokes
+    if len(evaluations) > 0:
+        jokometian.id = evaluations[0].session.id
 
     if dominant_traits:
         # Set additional properties based on dominant traits
