@@ -37,7 +37,7 @@ class Joke(models.Model):
     trait = models.ForeignKey(
         OffenseTrait, on_delete=models.CASCADE, null=True, blank=True
     )
-    language = models.CharField(max_length=100, default="Spanish")
+    language = models.CharField(max_length=100, default="es")
 
 
 class EvaluationSession(models.Model):

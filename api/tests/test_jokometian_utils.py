@@ -44,13 +44,13 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
         # Create an evaluation session
         cls.session = EvaluationSession.objects.create()
 
-    def test_with_mixed_liked_jokes(self):
-        # Create liked evaluations for different traits
+    def test_with_mixed_jokes(self):
+        # Create liked and not liked evaluations for different traits
         JokeEvaluation.objects.create(
             session=self.session, joke=self.joke_with_race, liked=True
         )
         JokeEvaluation.objects.create(
-            session=self.session, joke=self.joke_with_gender, liked=True
+            session=self.session, joke=self.joke_with_gender, liked=False
         )
         evaluations = JokeEvaluation.objects.all()
 
@@ -65,9 +65,12 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
         )
 
     def test_no_offense_found_alone(self):
-        # Create an evaluation that likes a joke with no offense only
+        # Create an evaluation that the only jokes liked are NO_OFFENSE_FOUND
         JokeEvaluation.objects.create(
             session=self.session, joke=self.joke_with_no_offense, liked=True
+        )
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_disability, liked=False
         )
         evaluations = JokeEvaluation.objects.all()
 
@@ -87,6 +90,9 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
             session=self.session, joke=self.joke_with_gender, liked=True
         )
         JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_race, liked=False
+        )
+        JokeEvaluation.objects.create(
             session=self.session, joke=self.joke_with_no_offense, liked=True
         )
         JokeEvaluation.objects.create(
@@ -96,7 +102,7 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
         # Check Jokomenain.traits is a list of 3 traits
         evaluations = JokeEvaluation.objects.all()
         jokometian = create_jokometian_from_jokes_evaluation(evaluations)
-        # Only 2 traits sin no offense trait is removed
+        # Only 2 traits since no offense trait is removed
         self.assertEqual(len(jokometian.traits), 2)
 
         # Test they are sorted by degree desc
@@ -121,10 +127,13 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
 
     def test_create_new_jokometian_ranking(self):
         JokeEvaluation.objects.create(
-            session=self.session, joke=self.joke_with_race, liked=True
+            session=self.session, joke=self.joke_with_race, liked=False
         )
         JokeEvaluation.objects.create(
             session=self.session, joke=self.joke_with_gender, liked=True
+        )
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_race, liked=True
         )
         evaluations = JokeEvaluation.objects.all()
 
@@ -147,6 +156,9 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
         )
         JokeEvaluation.objects.create(
             session=self.session, joke=self.joke_with_gender, liked=True
+        )
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_gender, liked=False
         )
         evaluations = JokeEvaluation.objects.all()
         jokometian = create_jokometian_from_jokes_evaluation(evaluations)
@@ -202,3 +214,44 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
 
         # Additionally, check the length of the jokes list matches the number of liked jokes
         self.assertEqual(len(jokometian.jokes), 1)
+
+    def test_no_jokes_liked(self):
+        # Case where there are no liked jokes
+        for i in range(5):
+            JokeEvaluation.objects.create(
+                session=self.session, joke=self.joke_with_disability, liked=False
+            )
+        evaluations = JokeEvaluation.objects.all()
+        jokometian = create_jokometian_from_jokes_evaluation(evaluations)
+        self.assertEqual(jokometian.name, "GRUMPY")
+        self.assertEqual(
+            jokometian.image_url,
+            settings.STATIC_URL + "images/jokometians/image_grumpy.svg",
+        )
+
+    def test_all_jokes_liked(self):
+        # Case where all jokes are liked
+        # array of 5 trait names
+        trait_names = [
+            OffenseTrait.RELIGION,
+            OffenseTrait.ETHNICITY,
+            OffenseTrait.NO_OFFENSE_FOUND,
+            OffenseTrait.DISABILITY,
+            OffenseTrait.GENERIC_VIOLENCE,
+        ]
+
+        for i in range(5):
+            trait = OffenseTrait.objects.create(name=trait_names[i], degree=i)
+            joke = Joke.objects.create(
+                content=f"Joke {i}",
+                trait=trait,
+                language="en",
+            )
+            JokeEvaluation.objects.create(session=self.session, joke=joke, liked=True)
+        evaluations = JokeEvaluation.objects.all()
+        jokometian = create_jokometian_from_jokes_evaluation(evaluations)
+        self.assertEqual(jokometian.name, "GIGGLY")
+        self.assertEqual(
+            jokometian.image_url,
+            settings.STATIC_URL + "images/jokometians/image_giggly.svg",
+        )

@@ -4,60 +4,7 @@ from .models import OffenseTrait, JokometianRanking
 from .dtos import Jokometian
 from django.db import transaction
 from django.db.models import F
-
-trait_names = {
-    OffenseTrait.RACE: _("Fiery"),
-    OffenseTrait.RELIGION: _("Spiritual"),
-    OffenseTrait.ETHNICITY: _("Diverse"),
-    OffenseTrait.GENDER: _("Wise"),
-    OffenseTrait.SEXUAL_ORIENTATION: _("Radiant"),
-    OffenseTrait.DISABILITY: _("Resilient"),
-    OffenseTrait.GENERIC_VIOLENCE: _("Fierce"),
-    OffenseTrait.NO_OFFENSE_FOUND: _("Pure Soul"),
-}
-
-trait_descriptions = {
-    OffenseTrait.RACE: _(
-        "Born from the flames of challenge, always ready to ignite change."
-    ),
-    OffenseTrait.RELIGION: _(
-        "With a deep spiritual connection, seeking harmony in all."
-    ),
-    OffenseTrait.ETHNICITY: _(
-        "Celebrating diversity, embodying the beauty of all cultures."
-    ),
-    OffenseTrait.GENDER: _("Imbued with wisdom, understanding the balance of power."),
-    OffenseTrait.SEXUAL_ORIENTATION: _(
-        "Radiating acceptance, embracing all forms of love."
-    ),
-    OffenseTrait.DISABILITY: _(
-        "Showing unmatched resilience, overcoming every obstacle."
-    ),
-    OffenseTrait.GENERIC_VIOLENCE: _(
-        "Fierce in the face of adversity, a warrior of light."
-    ),
-    OffenseTrait.NO_OFFENSE_FOUND: _(
-        "An untainted soul, spreading joy and laughter wherever they go."
-    ),
-}
-
-# Adjusted image mappings to use the OffenseTrait model's identifiers
-trait_images = {
-    OffenseTrait.RACE: settings.STATIC_URL + "images/jokometians/image_race.svg",
-    OffenseTrait.RELIGION: settings.STATIC_URL
-    + "images/jokometians/image_religion.svg",
-    OffenseTrait.ETHNICITY: settings.STATIC_URL
-    + "images/jokometians/image_ethnicity.svg",
-    OffenseTrait.GENDER: settings.STATIC_URL + "images/jokometians/image_gender.svg",
-    OffenseTrait.SEXUAL_ORIENTATION: settings.STATIC_URL
-    + "images/jokometians/image_sexual_orientation.svg",
-    OffenseTrait.DISABILITY: settings.STATIC_URL
-    + "images/jokometians/image_disability.svg",
-    OffenseTrait.GENERIC_VIOLENCE: settings.STATIC_URL
-    + "images/jokometians/image_violence.svg",
-    OffenseTrait.NO_OFFENSE_FOUND: settings.STATIC_URL
-    + "images/jokometians/image_pure.svg",
-}
+from .jokometian_traits import traits
 
 
 def create_jokometian_from_jokes_evaluation(evaluations):
@@ -102,21 +49,35 @@ def create_jokometian_from_jokes_evaluation(evaluations):
 
     # Creating the Jokometian instance with the top dominant traits
     jokometian = Jokometian()
-    jokometian.traits = dominant_traits
     jokometian.jokes = liked_jokes
     if len(evaluations) > 0:
         jokometian.id = evaluations[0].session.id
 
+    # No jokes liked
+    if len(evaluations) > 0 and len(liked_jokes) == 0:
+        # Set grumpy Jokometian properties
+        dominant_traits = [OffenseTrait(name="GRUMPY", degree=10)]
+    # All evaluation's jokes liked
+    evaluation_liked_jokes = [eval.joke for eval in evaluations if eval.liked]
+    if len(evaluation_liked_jokes) > 0 and (
+        len(evaluation_liked_jokes) == len(evaluations)
+    ):
+        # Set giglly Jokometian properties
+        dominant_traits = [OffenseTrait(name="GIGGLY", degree=10)]
+        # If you like all jokes, uou have no favorite jokes
+        jokometian.jokes = []
+
+    jokometian.traits = dominant_traits
+
     if dominant_traits:
-        # Set additional properties based on dominant traits
         dominant_trait = dominant_traits[0]
         jokometian.name = dominant_trait.name
-        jokometian.description = trait_descriptions.get(
-            dominant_trait.name,
-            "An enigmatic Jokometian with a unique blend of traits.",
+        trait_info = traits.get(dominant_traits[0].name, None)
+        jokometian.description = trait_info.get(
+            "description", "An enigmatic Jokometian with a unique blend of traits."
         )
-        jokometian.image_url = trait_images.get(
-            dominant_trait.name, settings.STATIC_URL + "images/jokometians/default.svg"
+        jokometian.image_url = trait_info.get(
+            "image_url", settings.STATIC_URL + "images/jokometians/default.svg"
         )
     else:
         # Set default Jokometian properties when no jokes are liked

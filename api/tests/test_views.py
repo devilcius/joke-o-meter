@@ -11,8 +11,10 @@ from api.models import (
 from api.jokometian_utils import create_jokometian_from_jokes_evaluation
 from api.serializers import JokometianRankingSerializer
 import uuid
+from django.test import override_settings
 
 
+@override_settings(LANGUAGE_CODE="en-us")
 class JokeListViewTest(APITestCase):
     @classmethod
     def setUpTestData(cls):
@@ -26,7 +28,7 @@ class JokeListViewTest(APITestCase):
             Joke.objects.create(
                 content=f"Joke {i}",
                 trait=offense_trait,
-                language="es",
+                language="en",
             )
         for trait in OffenseTrait.OFFENSE_TYPE_CHOICES:
             if trait[0] == OffenseTrait.NO_OFFENSE_FOUND:
@@ -36,7 +38,7 @@ class JokeListViewTest(APITestCase):
                 Joke.objects.create(
                     content=f"Joke {i}",
                     trait=offense_trait,
-                    language="es",
+                    language="en",
                 )
 
         # Create additional jokes in another language for testing language filtering
@@ -47,7 +49,7 @@ class JokeListViewTest(APITestCase):
             Joke.objects.create(
                 content=f"Chiste {i}",
                 trait=offense_trait,
-                language="en",
+                language="es",
             )
 
     def test_view_url_exists_at_desired_location(self):
@@ -141,12 +143,12 @@ class JokesEvaluationViewTest(APITestCase):
             Joke.objects.create(
                 content="Why did the chicken cross the road?",
                 trait=race_offense_trait,
-                language="English",
+                language="en",
             ),
             Joke.objects.create(
                 content="I told my computer I needed a break, and it didn't respond.",
                 trait=gender_offense_trait,
-                language="English",
+                language="en",
             ),
         ]
 
@@ -214,10 +216,10 @@ class JokometianDetailViewTest(APITestCase):
 
         # Create jokes linked to traits
         cls.joke_with_race = Joke.objects.create(
-            content="Race joke", trait=cls.race_trait, language="English"
+            content="Race joke", trait=cls.race_trait, language="en"
         )
         cls.joke_with_gender = Joke.objects.create(
-            content="Gender joke", trait=cls.gender_trait, language="Spanish"
+            content="Gender joke", trait=cls.gender_trait, language="es"
         )
 
         # Create evaluations for the session

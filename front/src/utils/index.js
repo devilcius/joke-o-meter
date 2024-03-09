@@ -47,7 +47,17 @@ export const getJokometianTraitMapper = (t) => {
             'trait': t('jokometian.trait_pure_soul'),
             'emoji': '😇',
             'name': t('jokometian.name_pure_soul'),
-        },        
+        },
+        'GRUMPY': {
+            'trait': t('jokometian.trait_grumpy'),
+            'emoji': '👿',
+            'name': t('jokometian.name_grumpy'),
+        },
+        'GIGGLY': {
+            'trait': t('jokometian.trait_giggly'),
+            'emoji': '😂',
+            'name': t('jokometian.name_giggly'),
+        }, 
     };    
     return TRAITS_MAPPER;
 }

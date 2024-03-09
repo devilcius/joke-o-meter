@@ -42,7 +42,7 @@ class JokeModelTest(TestCase):
         Test that the default language of a Joke instance is "Spanish".
         """
         joke = Joke.objects.create(content="Another random joke.")
-        self.assertEqual(joke.language, "Spanish")
+        self.assertEqual(joke.language, "es")
 
     def test_joke_string_representation(self):
         """
