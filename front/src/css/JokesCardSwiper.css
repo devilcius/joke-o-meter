@@ -16,20 +16,20 @@
 
 .card-swipe {
     position: absolute;
-    height: 1000px;
+    height: 70vh;
     user-select: none;
 }
 
 .card-container {
     width: 90vw;
-    height: 1000px;
+    height: 70Vh;
 }
 
 .joke-card {
     position: relative;
     width: 80vw;
-    height: 1000px;
-    background-color: beige;
+    height: 70vh;
+    background-color: #daf6f7;
     box-shadow: 1px 0px 5px 0px #ccc;
     border-radius: 20px;
     background-size: cover;
