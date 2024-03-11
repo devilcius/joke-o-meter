@@ -19,7 +19,8 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Create offense traits
-        cls.race_trait = OffenseTrait.objects.create(name=OffenseTrait.RACE, degree=10)
+        cls.race_trait = OffenseTrait.objects.create(
+            name=OffenseTrait.RACE, degree=10)
         cls.gender_trait = OffenseTrait.objects.create(
             name=OffenseTrait.GENDER, degree=8
         )
@@ -58,7 +59,8 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
 
         # Assert that Jokometian's name and description consider the dominant trait (Race in this case)
         self.assertEqual(jokometian.name, OffenseTrait.RACE)
-        self.assertIn("Born from the flames of challenge", jokometian.description)
+        self.assertIn("Born from the flames of challenge",
+                      jokometian.description)
         self.assertEqual(
             jokometian.image_url,
             settings.STATIC_URL + "images/jokometians/image_race.svg",
@@ -180,7 +182,7 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
         self.assertEqual(JokometianRanking.objects.count(), 1)
         self.assertEqual(initial_ranking.score, updated_score)
         self.assertEqual(
-            initial_ranking.image_url, "/static/images/jokometians/image_race.svg"
+            initial_ranking.image_url, "/assets/images/jokometians/image_race.svg"
         )
 
     def test_jokometian_includes_liked_jokes_only(self):
@@ -247,7 +249,8 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
                 trait=trait,
                 language="en",
             )
-            JokeEvaluation.objects.create(session=self.session, joke=joke, liked=True)
+            JokeEvaluation.objects.create(
+                session=self.session, joke=joke, liked=True)
         evaluations = JokeEvaluation.objects.all()
         jokometian = create_jokometian_from_jokes_evaluation(evaluations)
         self.assertEqual(jokometian.name, "GIGGLY")
