@@ -42,11 +42,22 @@ const JokometianView = () => {
     return (
         <div className="d-flex align-items-center justify-content-center jokometian-view-container">
             <Helmet>
+                {/* Default Meta Tags */}
+                <meta property="description" content={jokometian.description} />
+                {/* Facebook Meta Tags */}
                 <title>Joke-O-Meter: {TRAITS_MAPPER[jokometian.name].name}</title>
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content={jokometianUrl} />
                 <meta property="og:title" content={TRAITS_MAPPER[jokometian.name].name} />
                 <meta property="og:description" content={jokometian.description} />
-                <meta property="og:image" content={jokometianImageUrl} />
-                <meta property="og:url" content={jokometianUrl} />
+                <meta property="og:image" content={jokometianImageUrl} />                                
+                {/* Twitter Meta Tags */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta property="twitter:domain" content={window.location.origin} />
+                <meta property="twitter:url" content={jokometianUrl} />
+                <meta name="twitter:title" content={TRAITS_MAPPER[jokometian.name].name} />
+                <meta name="twitter:description" content={jokometian.description} />
+                <meta name="twitter:image" content={jokometianImageUrl} />                
             </Helmet>
             <div className={`flip-card ${flipped ? 'flipped' : ''}`} onClick={handleFlip}>
                 <div className="flip-card-inner">
