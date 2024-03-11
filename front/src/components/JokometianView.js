@@ -37,7 +37,7 @@ const JokometianView = () => {
     }
     // Build jokeometian URL from jokematian id
     const jokometianUrl = `${window.location.origin}/jokometian/${jokometian.id}`;
-    const jokometianImageUrl = `${window.location.origin}${jokometian.image_url}`;    
+    const jokometianImageUrl = `${window.location.origin}${jokometian.image_url.replace('svg', 'jpg')}`;    
 
     return (
         <div className="d-flex align-items-center justify-content-center jokometian-view-container">
