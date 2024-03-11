@@ -50,7 +50,7 @@ const JokometianView = () => {
                 <meta property="og:url" content={jokometianUrl} />
                 <meta property="og:title" content={TRAITS_MAPPER[jokometian.name].name} />
                 <meta property="og:description" content={jokometian.description} />
-                <meta property="og:image" content={jokometianImageUrl} />                                
+                <meta property="og:image" itemprop="image" content={jokometianImageUrl} />                                
                 {/* Twitter Meta Tags */}
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta property="twitter:domain" content={window.location.origin} />
