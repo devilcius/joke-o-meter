@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from api.models import Joke
+from api.models import Joke, OffenseTrait
 from django.db import transaction
 import traceback
 
@@ -14,11 +14,18 @@ class Command(BaseCommand):
 
         try:
             with transaction.atomic(using="mysql"):
-                objlist = Joke.objects.using("sqlite").all()
-                for obj in objlist:
+                # Migrate OffenseTrait data
+                offense_trait_list = OffenseTrait.objects.using("sqlite").all()
+                for obj in offense_trait_list:
+                    obj.pk = None
+                    obj.save(using="mysql")
+                    self.stdout.write(self.style.SUCCESS(f"Trait saved: {obj}"))
+
+                joke_list = Joke.objects.using("sqlite").all()
+                for obj in joke_list:
                     obj.pk = None  # Reset primary key to avoid conflicts
                     obj.save(using="mysql")
-                    self.stdout.write(self.style.SUCCESS(f"Saved: {obj}"))
+                    self.stdout.write(self.style.SUCCESS(f"Joke saved: {obj}"))
 
                 self.stdout.write(
                     self.style.SUCCESS("Successfully migrated data to MySQL.")
