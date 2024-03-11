@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import '../css/JokometianView.css'; // Ensure your CSS file is correctly imported
 import { fetchJokometian } from '../api/jokometians';
 import { useTranslation } from 'react-i18next';
-import Card from 'react-bootstrap/Card';
+import { Helmet } from 'react-helmet';
+import { Card } from 'react-bootstrap';
 import JokometianTraits from './JokometianTraits';
 import JokometianAmmunition from './JokometianAmmunition';
 import JokometianArsenal from './JokometianArsenal'; // Import the JokometianJokes component
@@ -36,22 +37,30 @@ const JokometianView = () => {
     }
     // Build jokeometian URL from jokematian id
     const jokometianUrl = `${window.location.origin}/jokometian/${jokometian.id}`;
+    const jokometianImageUrl = `${window.location.origin}${jokometian.image_url}`;    
 
     return (
         <div className="d-flex align-items-center justify-content-center jokometian-view-container">
+            <Helmet>
+                <title>Joke-O-Meter: {TRAITS_MAPPER[jokometian.name].name}</title>
+                <meta property="og:title" content={TRAITS_MAPPER[jokometian.name].name} />
+                <meta property="og:description" content={jokometian.description} />
+                <meta property="og:image" content={jokometianImageUrl} />
+                <meta property="og:url" content={jokometianUrl} />
+            </Helmet>
             <div className={`flip-card ${flipped ? 'flipped' : ''}`} onClick={handleFlip}>
                 <div className="flip-card-inner">
                     <div className="flip-card-front">
-                        <Card style={{ width: '25rem' }} className='shadow-lg p-3 mb-5 bg-white rounded'>
+                        <Card style={{ width: '23rem' }} className='shadow-lg p-3 mb-5 bg-white rounded'>
                             <Card.Header className="d-flex justify-content-between">{t('jokometian.title')}<CopyUrl url={jokometianUrl} /></Card.Header>
                             <Card.Img variant="top" src={jokometian.image_url} />
                             <Card.Body>
                                 <Card.Title>{TRAITS_MAPPER[jokometian.name].name}</Card.Title>
                                 <div>
                                     {jokometian.description}
-                                    <hr/>
+                                    <hr />
                                     <JokometianTraits traits={jokometian.traits} />
-                                    <hr/>
+                                    <hr />
                                     <JokometianAmmunition numberOfAmmunitions={jokometian.jokes?.length} />
                                 </div>
                             </Card.Body>

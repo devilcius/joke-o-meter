@@ -8,7 +8,7 @@
 /* Container for the flipping card */
 .flip-card {
     perspective: 1000px;
-    width: 25rem;
+    width: 23rem;
 }
 
 /* This container is needed to position the front and back side */
@@ -41,7 +41,7 @@
 }
 
 .jokes-arsenal {
-    width: 25rem;
+    width: 23rem;
     height: 100vh !important;
 }
 .jokes-arsenal .card-body {
