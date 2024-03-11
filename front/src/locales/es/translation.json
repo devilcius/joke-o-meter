@@ -1,9 +1,9 @@
 {
     "app.description": "Esta es una aplicación para medir el nivel de chiste de un chiste",
     "app.title": "Joke-O-Meter",
-    "instructions.title": "Instrucciones",
+    "instructions.title": "Manual",
     "instructions.description": "Desliza a la derecha si el chiste te hace gracia, a la derecha si no.",
-    "instructions.goal.title": "Objetivo",
+    "instructions.goal.title": "Instrucciones",
     "instructions.goal.description": "El objetivo principal es que pases un buen rato. Encuentra a tu personaje y compartelo con quien quieras. En el dorso del personaje encontrarás su arsenal mortífero, ¡da la vuelta a la carta! Si te van los retos, intenta encontrar el personaje de alma pura. ¡Dicen que existe!",
     "instructions.motivation.description": "La motivación surge de una discusión acerca de si un chiste, o el humor en general, puede hacer daño. Hay quién sostiene que nadie debería ofenderse por un chiste, otra gente opina que cierto humor alimenta la violencia social. Es una realidad que existen colectivos desfavorecidos que necesitan apoyo afectivo de la sociedad, como también es cierto que el humor puede ser una herramienta para superar situaciones difíciles. ¿Dónde está el límite? Joke-O-Meter aspira a enfocar el problema desde un punto de vista amable, sin olvidar que el humor es una herramienta poderosa que puede ser utilizada para hacer daño.",
     "instructions.motivation.title": "Motivación",
@@ -41,7 +41,7 @@
     "toast.copy_url_success": "URL copiada al portapapeles",
     "toast.success": "Yuhuuu",
     "welcome.play": "Jugar",
-    "welcome.instructions": "Instrucciones",
+    "welcome.instructions": "Manual",
     "welcome.lead": "Dime de qué te ríes y te diré cómo eres",
     "welcome.start": "Inicio",
     "welcome.title": "Bienvenido a Joke-O-Meter"

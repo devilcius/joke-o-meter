@@ -4,5 +4,22 @@
 .navbar-brand {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
+}
+
+.navbar-brand {
+  margin-right: 0px !important;
+}
+
+/* for mobile screens */
+@media (max-width: 768px) {
+  .dropdown-menu.show {
+    display: flex;
+    flex-direction: column;
+    position: static;
+    border: none;
+    /* Move to the left */
+    transform: translateX(-70%);
+
+  }
 }

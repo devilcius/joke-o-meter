@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axiosInstance from './axios_instance';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 // Get all jokes
 export const fetchJokes = async () => {
   try {
 
-    return await axios.get(`${API_BASE_URL}/jokes/`);
+    return await axiosInstance.get(`${API_BASE_URL}/jokes/`);
   } catch (error) {
 
     return error.response;
@@ -15,7 +15,7 @@ export const fetchJokes = async () => {
 // Post joke batch
 export const postJokes = async (jokes) => {
   try {
-    return await axios.post(`${API_BASE_URL}/evaluate-jokes/`, jokes);
+    return await axiosInstance.post(`${API_BASE_URL}/evaluate-jokes/`, jokes);
   } catch (error) {
     return error.response;
   }

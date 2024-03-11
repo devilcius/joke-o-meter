@@ -1,7 +1,7 @@
 {
     "app.description": "This is an application to measure the funniness of jokes.",
     "app.title": "Joke-O-Meter",
-    "instructions.title": "Instructions",
+    "instructions.title": "Manual",
     "instructions.description": "Swipe right if you like the joke, swipe left if you don't.",
     "instructions.goal.title": "Goal",
     "instructions.goal.description": "The main goal is to have fun. Find your character and share it with whoever you want.  On the back of the character you will find his deadly arsenal, flip the card! If you like challenges, try to find the character with a pure soul. I've heard it exists!",
@@ -41,7 +41,7 @@
     "toast.copy_url_success": "URL copied to clipboard",
     "toast.success": "Success",
     "welcome.play": "Play",
-    "welcome.instructions": "Instructions",
+    "welcome.instructions": "Manual",
     "welcome.lead": "Tell me what you're laughing at and I'll tell you what you're like",
     "welcome.start": "Start",
     "welcome.title": "Welcome to Joke-O-Meter"
