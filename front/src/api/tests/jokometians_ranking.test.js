@@ -1,9 +1,8 @@
 import MockAdapter from 'axios-mock-adapter';
-import axios from 'axios';
 import { fetchJokometiansRanking } from '../jokometians_ranking';
+import { API_BASE_URL, axiosInstance } from '../axios_instance';
 
-const mockAdapter = new MockAdapter(axios);
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const mockAdapter = new MockAdapter(axiosInstance);
 
 describe('Jakometians ranking API', () => {
 
@@ -12,7 +11,7 @@ describe('Jakometians ranking API', () => {
       {
         "name": "ETHNICITY",
         "score": 28,
-        "image_url": "/static/images/jokometians/image_ethnicity.svg"
+        "image_url": "/assets/images/jokometians/image_ethnicity.svg"
       }
     ];
     mockAdapter.onGet(`${API_BASE_URL}/jokometian-rankings/`).reply(200, mockData);

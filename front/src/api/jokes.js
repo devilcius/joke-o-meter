@@ -1,6 +1,5 @@
-import axiosInstance from './axios_instance';
+import { axiosInstance, API_BASE_URL} from './axios_instance';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 // Get all jokes
 export const fetchJokes = async () => {
   try {

@@ -1,9 +1,8 @@
 import MockAdapter from 'axios-mock-adapter';
-import axios from 'axios';
 import { postJokes, fetchJokes } from '../jokes';
+import { API_BASE_URL, axiosInstance } from '../axios_instance';
 
-const mockAdapter = new MockAdapter(axios);
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const mockAdapter = new MockAdapter(axiosInstance);
 
 describe('Jokes API', () => {
 
