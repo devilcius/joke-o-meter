@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import '../css/JokometianView.css'; // Ensure your CSS file is correctly imported
 import { fetchJokometian } from '../api/jokometians';
 import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet';
 import { Card } from 'react-bootstrap';
 import JokometianTraits from './JokometianTraits';
 import JokometianAmmunition from './JokometianAmmunition';
@@ -37,28 +36,9 @@ const JokometianView = () => {
     }
     // Build jokeometian URL from jokematian id
     const jokometianUrl = `${window.location.origin}/jokometian/${jokometian.id}`;
-    const jokometianImageUrl = `${window.location.origin}${jokometian.image_url.replace('svg', 'jpg')}`;    
 
     return (
         <div className="d-flex align-items-center justify-content-center jokometian-view-container">
-            <Helmet>
-                {/* Default Meta Tags */}
-                <meta property="description" content={jokometian.description} />
-                {/* Facebook Meta Tags */}
-                <title>Joke-O-Meter: {TRAITS_MAPPER[jokometian.name].name}</title>
-                <meta property="og:type" content="website" />
-                <meta property="og:url" content={jokometianUrl} />
-                <meta property="og:title" content={TRAITS_MAPPER[jokometian.name].name} />
-                <meta property="og:description" content={jokometian.description} />
-                <meta property="og:image" itemprop="image" content={jokometianImageUrl} />                                
-                {/* Twitter Meta Tags */}
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta property="twitter:domain" content={window.location.origin} />
-                <meta property="twitter:url" content={jokometianUrl} />
-                <meta name="twitter:title" content={TRAITS_MAPPER[jokometian.name].name} />
-                <meta name="twitter:description" content={jokometian.description} />
-                <meta name="twitter:image" content={jokometianImageUrl} />                
-            </Helmet>
             <div className={`flip-card ${flipped ? 'flipped' : ''}`} onClick={handleFlip}>
                 <div className="flip-card-inner">
                     <div className="flip-card-front">

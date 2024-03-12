@@ -22,7 +22,7 @@ from api.views import (
     JokometianDetailView,
     JokometianRankingListView,
 )
-from django.conf.urls import url
+from .views import DynamicMetaView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
@@ -68,5 +68,8 @@ urlpatterns = [
         name="schema-swagger-ui",
     ),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+    path(
+        "jokometian/<uuid:uuid>/share", DynamicMetaView.as_view(), name="dynamic-meta"
+    ),
     path("", include("front.urls")),  # This has to be the last item!
 ]
