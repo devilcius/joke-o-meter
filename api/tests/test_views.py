@@ -199,7 +199,7 @@ class JokesEvaluationViewTest(APITestCase):
         ranking = JokometianRanking.objects.first()
         self.assertIsNotNone(ranking)
 
-        self.assertEqual(ranking.name, jokometian.name)
+        self.assertEqual(ranking.name, jokometian.key_name)
         self.assertGreater(ranking.score, 0)
         self.assertEqual(ranking.image_url, jokometian.image_url)
 

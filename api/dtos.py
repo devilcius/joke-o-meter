@@ -12,3 +12,4 @@ class Jokometian:
     name: str = ""
     description: str = ""
     image_url: str = ""
+    key_name: str = ""

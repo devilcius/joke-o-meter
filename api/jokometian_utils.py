@@ -11,6 +11,7 @@ def create_jokometian_from_jokes_evaluation(evaluations):
     # Initialize a list to keep track of aggregated OffenseTrait objects
     aggregated_traits = []
     liked_jokes = []
+    JOKOMETIAN_TRAITS = traits()
 
     for eval in evaluations:
         if eval.liked:
@@ -71,11 +72,12 @@ def create_jokometian_from_jokes_evaluation(evaluations):
 
     if dominant_traits:
         dominant_trait = dominant_traits[0]
-        jokometian.name = dominant_trait.name
-        trait_info = traits.get(dominant_traits[0].name, None)
+        jokometian.key_name = dominant_trait.name
+        trait_info = JOKOMETIAN_TRAITS.get(dominant_traits[0].name, None)
         jokometian.description = trait_info.get(
             "description", "An enigmatic Jokometian with a unique blend of traits."
         )
+        jokometian.name = trait_info.get("name", "Jokometian")
         jokometian.image_url = trait_info.get(
             "image_url", settings.STATIC_URL + "images/jokometians/default.svg"
         )
@@ -101,7 +103,7 @@ def update_jokometian_ranking(evaluations):
     with transaction.atomic():
         # Retrieve or create the JokometianRanking instance
         ranking, created = JokometianRanking.objects.get_or_create(
-            name=jokometian.name,
+            name=jokometian.key_name,
             defaults={
                 "image_url": jokometian.image_url,  # Set during creation
                 "score": total_score,  # Initial score set for new creation

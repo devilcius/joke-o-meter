@@ -7,11 +7,13 @@ from django.views import View
 from api.models import JokeEvaluation
 from api.jokometian_utils import create_jokometian_from_jokes_evaluation
 from api.jokometian_traits import traits
+from django.utils import translation
 
 
 class DynamicMetaView(View):
 
     def get(self, request, uuid, *args, **kwargs):
+        JOKOMETIAN_TRAITS = traits()
         # Try to get the crawlers list from cache
         crawlers = cache.get("crawlers_list")
         # If not in cache, fetch it and store it in cache
@@ -33,6 +35,11 @@ class DynamicMetaView(View):
         )
 
         if is_crawler:
+            # Get the language from the query string
+            language = request.GET.get("lang", "en")
+            # update system language
+            translation.activate(language)
+
             # It's a bot, serve the SEO-optimized content
             evaluations = JokeEvaluation.objects.filter(session=uuid)
             if evaluations.exists():
@@ -43,12 +50,12 @@ class DynamicMetaView(View):
                 absolute_url = request.build_absolute_uri()
                 # Removes the trailing /share from the absolute url
                 jokometian_url = re.sub(r"/share$", "", absolute_url)
-                jokometian_info = traits.get(jokometian.name, None)
                 context = {
-                    "og_title": jokometian_info.get("name", "Jokometian"),
+                    "og_title": jokometian.name,
                     "og_description": jokometian.description,
                     "og_image": request.build_absolute_uri(jpg_image),
                     "og_url": jokometian_url,
+                    "current_language": language,
                 }
                 return render(request, "jokeometer/dynamic_index.html", context)
             else:

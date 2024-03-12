@@ -57,7 +57,7 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
         jokometian = create_jokometian_from_jokes_evaluation(evaluations)
 
         # Assert that Jokometian's name and description consider the dominant trait (Race in this case)
-        self.assertEqual(jokometian.name, OffenseTrait.RACE)
+        self.assertEqual(jokometian.key_name, OffenseTrait.RACE)
         self.assertIn("Born from the flames of challenge", jokometian.description)
         self.assertEqual(
             jokometian.image_url,
@@ -77,7 +77,7 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
         jokometian = create_jokometian_from_jokes_evaluation(evaluations)
 
         # Assert that Jokometian considers the NO_OFFENSE_FOUND trait when it's the only one liked
-        self.assertEqual(jokometian.name, OffenseTrait.NO_OFFENSE_FOUND)
+        self.assertEqual(jokometian.key_name, OffenseTrait.NO_OFFENSE_FOUND)
         self.assertIn("An untainted soul", jokometian.description)
         self.assertEqual(
             jokometian.image_url,
@@ -164,7 +164,7 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
         jokometian = create_jokometian_from_jokes_evaluation(evaluations)
         # Create an initial JokometianRanking that should be updated
         initial_ranking = JokometianRanking.objects.create(
-            name=jokometian.name, score=50, image_url="initial_image_url.png"
+            name=jokometian.key_name, score=50, image_url="initial_image_url.png"
         )
 
         # Set up evaluations leading to an update of this ranking
@@ -223,7 +223,7 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
             )
         evaluations = JokeEvaluation.objects.all()
         jokometian = create_jokometian_from_jokes_evaluation(evaluations)
-        self.assertEqual(jokometian.name, "GRUMPY")
+        self.assertEqual(jokometian.key_name, "GRUMPY")
         self.assertEqual(
             jokometian.image_url,
             settings.STATIC_URL + "images/jokometians/image_grumpy.svg",
@@ -250,7 +250,7 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
             JokeEvaluation.objects.create(session=self.session, joke=joke, liked=True)
         evaluations = JokeEvaluation.objects.all()
         jokometian = create_jokometian_from_jokes_evaluation(evaluations)
-        self.assertEqual(jokometian.name, "GIGGLY")
+        self.assertEqual(jokometian.key_name, "GIGGLY")
         self.assertEqual(
             jokometian.image_url,
             settings.STATIC_URL + "images/jokometians/image_giggly.svg",

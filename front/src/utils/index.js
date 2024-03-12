@@ -11,27 +11,22 @@ export const getJokometianTraitMapper = (t) => {
         'RACE': {
             'trait': t('jokometian.trait_incandescent'),
             'emoji': '🔥',
-            'name': t('jokometian.name_incandescent'),
         },
         'RELIGION': {
             'trait': t('jokometian.trait_spiritual'),
             'emoji': '🕍',
-            'name': t('jokometian.name_spiritual'),
         },
         'ETHNICITY': {
             'trait': t('jokometian.trait_diversity'),
             'emoji': '🌍',
-            'name': t('jokometian.name_diversity'),
         },
         'GENDER': {
             'trait': t('jokometian.trait_wise'),
             'emoji': '👴',
-            'name': t('jokometian.name_wise'),
         },
         'SEXUAL_ORIENTATION': {
             'trait': t('jokometian.trait_radiant'),
             'emoji': '🌈',
-            'name': t('jokometian.name_radiant'),
         },
         'DISABILITY': {
             'trait': t('jokometian.trait_resilient'),
@@ -41,22 +36,18 @@ export const getJokometianTraitMapper = (t) => {
         'GENERIC_VIOLENCE': {
             'trait': t('jokometian.trait_fierce'),
             'emoji': '🗡️',
-            'name': t('jokometian.name_fierce'),
         },
         'NO_OFFENSE_FOUND': {
             'trait': t('jokometian.trait_pure_soul'),
             'emoji': '😇',
-            'name': t('jokometian.name_pure_soul'),
         },
         'GRUMPY': {
             'trait': t('jokometian.trait_grumpy'),
             'emoji': '👿',
-            'name': t('jokometian.name_grumpy'),
         },
         'GIGGLY': {
             'trait': t('jokometian.trait_giggly'),
             'emoji': '😂',
-            'name': t('jokometian.name_giggly'),
         }, 
     };    
     return TRAITS_MAPPER;

@@ -1,12 +1,13 @@
 // hooks/useFetchJokes.js
 import { useState, useEffect } from 'react';
 import { fetchJokes } from '../api/jokes';
+import i18n from '../i18n';
 
 export const useFetchJokes = () => {
   const [jokes, setJokes] = useState([]);
   const [session, setSession] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
-
+  const currentLanguage = i18n.language;
   useEffect(() => {
     const fetchJokesData = async () => {
       try {
@@ -25,7 +26,7 @@ export const useFetchJokes = () => {
       }
     };
     fetchJokesData();
-  }, []);
+  }, [currentLanguage]);
 
   return { jokes, session, isFetching };
 }

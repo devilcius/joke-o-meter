@@ -5,7 +5,7 @@ import { faCheckCircle, faShareAlt } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 
 // renders a share icon button and shows a success message when the URL is copied to the clipboard
-const CopyUrl = ({url}) => {
+const CopyUrl = ({url, currentLanguage}) => {
     const { t } = useTranslation();
     const [showToast, setShowToast] = React.useState(false);
     const message = t('toast.copy_url_success');
@@ -19,7 +19,7 @@ const CopyUrl = ({url}) => {
     
     const onCopy = (e) => {
         e.stopPropagation();        
-        navigator.clipboard.writeText(url + '/share');
+        navigator.clipboard.writeText(url + '/share?lang=' + currentLanguage);
         setShowToast(true);
     }
 

@@ -7,16 +7,15 @@ import { Card } from 'react-bootstrap';
 import JokometianTraits from './JokometianTraits';
 import JokometianAmmunition from './JokometianAmmunition';
 import JokometianArsenal from './JokometianArsenal'; // Import the JokometianJokes component
-import { getJokometianTraitMapper } from '../utils/index';
 import CopyUrl from './CopyUrl';
+import i18n from '../i18n';
 
 const JokometianView = () => {
     const { t } = useTranslation();
-    const TRAITS_MAPPER = getJokometianTraitMapper(t);
     const { id } = useParams();
     const [jokometian, setJokometian] = useState({});
     const [flipped, setFlipped] = useState(false); // New state to manage flip
-
+    const currentLanguage = i18n.language;
     useEffect(() => {
         const fetchJokometianData = async () => {
             const response = await fetchJokometian(id);
@@ -25,7 +24,7 @@ const JokometianView = () => {
             }
         };
         fetchJokometianData();
-    }, [id]);
+    }, [id, currentLanguage]);
 
     const handleFlip = () => {
         setFlipped(!flipped); // Toggle the flipped state
@@ -43,10 +42,10 @@ const JokometianView = () => {
                 <div className="flip-card-inner">
                     <div className="flip-card-front">
                         <Card style={{ width: '23rem' }} className='shadow-lg p-3 mb-5 bg-white rounded'>
-                            <Card.Header className="d-flex justify-content-between">{t('jokometian.title')}<CopyUrl url={jokometianUrl} /></Card.Header>
+                            <Card.Header className="d-flex justify-content-between">{t('jokometian.title')}<CopyUrl url={jokometianUrl} currentLanguage={i18n.language} /></Card.Header>
                             <Card.Img variant="top" src={jokometian.image_url} />
                             <Card.Body>
-                                <Card.Title>{TRAITS_MAPPER[jokometian.name].name}</Card.Title>
+                                <Card.Title>{jokometian.name}</Card.Title>
                                 <div>
                                     {jokometian.description}
                                     <hr />
