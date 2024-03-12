@@ -37,15 +37,18 @@ class DynamicMetaView(View):
             evaluations = JokeEvaluation.objects.filter(session=uuid)
             if evaluations.exists():
                 # Assuming create_jokometian_from_jokes_evaluation() and other necessary logic is implemented correctly
-                jokometian = create_jokometian_from_jokes_evaluation(
-                    evaluations)
+                jokometian = create_jokometian_from_jokes_evaluation(evaluations)
                 jpg_image = re.sub(r"\.svg$", ".jpg", jokometian.image_url)
+                # Absolute url
+                absolute_url = request.build_absolute_uri()
+                # Removes the trailing /share from the absolute url
+                jokometian_url = re.sub(r"/share$", "", absolute_url)
                 jokometian_info = traits.get(jokometian.name, None)
                 context = {
                     "og_title": jokometian_info.get("name", "Jokometian"),
                     "og_description": jokometian.description,
                     "og_image": request.build_absolute_uri(jpg_image),
-                    "og_url": request.build_absolute_uri(),
+                    "og_url": jokometian_url,
                 }
                 return render(request, "jokeometer/dynamic_index.html", context)
             else:
