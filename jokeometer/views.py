@@ -6,6 +6,7 @@ import re
 from django.views import View
 from api.models import JokeEvaluation
 from api.jokometian_utils import create_jokometian_from_jokes_evaluation
+from api.jokometian_traits import traits
 
 
 class DynamicMetaView(View):
@@ -36,12 +37,15 @@ class DynamicMetaView(View):
             evaluations = JokeEvaluation.objects.filter(session=uuid)
             if evaluations.exists():
                 # Assuming create_jokometian_from_jokes_evaluation() and other necessary logic is implemented correctly
-                jokometian = create_jokometian_from_jokes_evaluation(evaluations)
+                jokometian = create_jokometian_from_jokes_evaluation(
+                    evaluations)
                 jpg_image = re.sub(r"\.svg$", ".jpg", jokometian.image_url)
+                jokometian_info = traits.get(jokometian.name, None)
                 context = {
-                    "og_title": jokometian.name,
+                    "og_title": jokometian_info.get("name", "Jokometian"),
                     "og_description": jokometian.description,
                     "og_image": request.build_absolute_uri(jpg_image),
+                    "og_url": request.build_absolute_uri(),
                 }
                 return render(request, "jokeometer/dynamic_index.html", context)
             else:
