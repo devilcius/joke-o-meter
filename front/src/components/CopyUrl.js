@@ -10,7 +10,7 @@ const CopyUrl = ({url}) => {
     const [showToast, setShowToast] = React.useState(false);
     const message = t('toast.copy_url_success');
     const onToastClose = (e) => {
-        // sanity check could be called on autohide
+        // sanity check, it could be called on autohide
         if (e) {
             e.stopPropagation();
         }
@@ -19,7 +19,7 @@ const CopyUrl = ({url}) => {
     
     const onCopy = (e) => {
         e.stopPropagation();        
-        navigator.clipboard.writeText(url);
+        navigator.clipboard.writeText(url + '/share');
         setShowToast(true);
     }
 
