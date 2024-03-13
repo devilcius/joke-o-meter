@@ -90,7 +90,7 @@ The Joke-O-Meter is a web application designed to entertain users by presenting 
 
 ## API Documentation
 
-Refer to `http://localhost:8000/swagge/` for detailed API documentation.
+Refer to `http://localhost:8000/swagger/` for detailed API documentation.
 
 ## Localization
 

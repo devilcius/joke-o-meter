@@ -7,7 +7,12 @@ body {
   display: flex;
   flex-direction: column;
 }
-
+/* for bigger screens */
+@media (min-width: 768px) {
+  #jokeometer {
+    height: 100vh;
+  }
+}
 footer {
   width: 100%;
   bottom: 0;
