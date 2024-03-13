@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-12 17:48+0100\n"
+"POT-Creation-Date: 2024-03-12 19:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,87 +18,96 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: api/jokometian_traits.py:8
+#: api/jokometian_traits.py:10
 msgid "Fiery"
 msgstr "Ardiente"
 
-#: api/jokometian_traits.py:10
+#: api/jokometian_traits.py:12
 msgid "Born from the flames of challenge, always ready to ignite change."
 msgstr "Nacida de las llamas del desafío, siempre lista para encender el cambio."
 
-#: api/jokometian_traits.py:15
+#: api/jokometian_traits.py:17
 msgid "Spiritual"
 msgstr "Espiritual"
 
-#: api/jokometian_traits.py:16
+#: api/jokometian_traits.py:19
 msgid "With a deep spiritual connection, seeking harmony in all."
 msgstr "Con una profunda conexión espiritual, buscando la armonía en todo."
 
-#: api/jokometian_traits.py:20
+#: api/jokometian_traits.py:24
 msgid "Diverse"
 msgstr "Diverso"
 
-#: api/jokometian_traits.py:22
+#: api/jokometian_traits.py:26
 msgid "Celebrating diversity, embodying the beauty of all cultures."
 msgstr "Celebrando la diversidad, encarnando la belleza de todas las culturas."
 
-#: api/jokometian_traits.py:27
+#: api/jokometian_traits.py:31
 msgid "Wise"
 msgstr "Sabio"
 
-#: api/jokometian_traits.py:28
+#: api/jokometian_traits.py:32
 msgid "Imbued with wisdom, understanding the balance of power."
 msgstr "Impregnada de sabiduría, comprendiendo el equilibrio del poder."
 
-#: api/jokometian_traits.py:32
+#: api/jokometian_traits.py:36
 msgid "Radiant"
 msgstr "Radiante"
 
-#: api/jokometian_traits.py:33
+#: api/jokometian_traits.py:37
 msgid "Radiating acceptance, embracing all forms of love."
 msgstr "Radiando aceptación, abrazando todas las formas de amor."
 
-#: api/jokometian_traits.py:38
+#: api/jokometian_traits.py:42
 msgid "Resilient"
 msgstr "Resiliente"
 
-#: api/jokometian_traits.py:39
+#: api/jokometian_traits.py:44
 msgid "Showing unmatched resilience, overcoming every obstacle."
 msgstr "Mostrando una resiliencia inigualable, superando cada obstáculo."
 
-#: api/jokometian_traits.py:43
+#: api/jokometian_traits.py:50
 msgid "Fierce"
 msgstr "Feroz"
 
-#: api/jokometian_traits.py:44
+#: api/jokometian_traits.py:51
 msgid "Fierce in the face of adversity, a warrior of light."
 msgstr "Feroz ante la adversidad, una guerrera de la luz."
 
-#: api/jokometian_traits.py:48
+#: api/jokometian_traits.py:55
 msgid "Pure Soul"
 msgstr "Alma Pura"
 
-#: api/jokometian_traits.py:50
+#: api/jokometian_traits.py:57
 msgid "An untainted soul, spreading joy and laughter wherever they go."
 msgstr "Un alma pura, esparciendo alegría y risas dondequiera que vaya."
 
-#: api/jokometian_traits.py:55
+#: api/jokometian_traits.py:62
 msgid "Grumpy"
 msgstr "Gruñón"
 
-#: api/jokometian_traits.py:57
+#: api/jokometian_traits.py:64
 msgid "A grumpy soul, always ready to complain. No joke is good enough."
 msgstr "Un alma gruñona, siempre dispuesta a quejarse. Ningún chiste es lo suficientemente bueno."
 
-#: api/jokometian_traits.py:62
+#: api/jokometian_traits.py:69
 msgid "Giggly"
 msgstr "Risitas"
 
-#: api/jokometian_traits.py:64
+#: api/jokometian_traits.py:71
 msgid "A giggly soul, always ready to laugh. Every joke is a good joke."
 msgstr "Un alma risueña, siempre dispuesta a reír. Todo chiste es un buen chiste."
 
-#: api/jokometian_utils.py:86
+#: api/jokometian_traits.py:76
+msgid "Diabolical"
+msgstr "Diabólico"
+
+#: api/jokometian_traits.py:78
+#, fuzzy
+msgid "A diabolical soul, always ready to cause trouble. No joke is safe."
+msgstr "Un alma diabólica, siempre dispuesta a causar problemas. Ningún chiste es seguro."
+
+#: api/jokometian_utils.py:88
 msgid "An enigmatic Jokometian with a unique blend of traits."
 msgstr "Un enigmático jokometiano con una combinación única de rasgos."
 

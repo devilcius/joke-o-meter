@@ -72,6 +72,14 @@ def traits():
             ),
             "image_url": settings.STATIC_URL + "images/jokometians/image_giggly.svg",
         },
+        "DIABOLICAL": {
+            "name": _("Diabolical"),
+            "description": _(
+                "A diabolical soul, always ready to cause trouble. No joke is safe."
+            ),
+            "image_url": settings.STATIC_URL
+            + "images/jokometians/image_diabolical.svg",
+        },
     }
 
     return traits

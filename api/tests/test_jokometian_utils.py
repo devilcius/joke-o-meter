@@ -52,6 +52,9 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
         JokeEvaluation.objects.create(
             session=self.session, joke=self.joke_with_gender, liked=False
         )
+        JokeEvaluation.objects.create(
+            session=self.session, joke=self.joke_with_no_offense, liked=True
+        )
         evaluations = JokeEvaluation.objects.all()
 
         jokometian = create_jokometian_from_jokes_evaluation(evaluations)
@@ -255,3 +258,33 @@ class CreateJokometianFromJokesEvaluationTest(TestCase):
             jokometian.image_url,
             settings.STATIC_URL + "images/jokometians/image_giggly.svg",
         )
+
+    def test_all_jokes_liked_no_favorite_jokes(self):
+        trait_names = [
+            OffenseTrait.RELIGION,
+            OffenseTrait.ETHNICITY,
+            OffenseTrait.NO_OFFENSE_FOUND,
+            OffenseTrait.DISABILITY,
+            OffenseTrait.GENERIC_VIOLENCE,
+            OffenseTrait.RACE,
+        ]
+
+        for i in range(len(trait_names)):
+            trait = OffenseTrait.objects.create(name=trait_names[i], degree=i)
+            joke = Joke.objects.create(
+                content=f"Joke {i}",
+                trait=trait,
+                language="en",
+            )
+            if trait.name == OffenseTrait.NO_OFFENSE_FOUND:
+                JokeEvaluation.objects.create(
+                    session=self.session, joke=joke, liked=False
+                )
+            else:
+                JokeEvaluation.objects.create(
+                    session=self.session, joke=joke, liked=True
+                )
+
+        evaluations = JokeEvaluation.objects.all()
+        jokometian = create_jokometian_from_jokes_evaluation(evaluations)
+        self.assertEqual(jokometian.key_name, "DIABOLICAL")

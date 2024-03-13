@@ -68,6 +68,30 @@ def create_jokometian_from_jokes_evaluation(evaluations):
         # If you like all jokes, uou have no favorite jokes
         jokometian.jokes = []
 
+    # Get liked jokes that are offensive (i.e., have a trait other than NO_OFFENSE_FOUND)
+    offensive_liked_jokes = [
+        eval.joke
+        for eval in evaluations
+        if eval.liked and eval.joke.trait.name != OffenseTrait.NO_OFFENSE_FOUND
+    ]
+    # Get not liked jokes that are non-offensive (NO_OFFENSE_FOUND)
+    not_offensive_not_liked_jokes = [
+        eval.joke
+        for eval in evaluations
+        if not eval.liked and eval.joke.trait.name == OffenseTrait.NO_OFFENSE_FOUND
+    ]
+    # Ensure every liked evaluation is for an offensive joke and all evaluations not liked are for non-offensive jokes
+    if (
+        len(evaluation_liked_jokes) > 0
+        and len(offensive_liked_jokes)
+        == len([eval for eval in evaluations if eval.liked])
+        and len(not_offensive_not_liked_jokes)
+        == len([eval for eval in evaluations if not eval.liked])
+    ):
+        # All liked evaluations are for offensive jokes, and all not liked evaluations are for non-offensive jokes
+        # Set diabolical Jokometian properties
+        dominant_traits = [OffenseTrait(name="DIABOLICAL", degree=10)]
+
     jokometian.traits = dominant_traits
 
     if dominant_traits:
