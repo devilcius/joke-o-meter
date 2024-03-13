@@ -48,3 +48,31 @@
     font-family: Fredoka, system-ui !important;
 }
 
+.copy-toast-container {
+  font-family: 'Fredoka', system-ui !important;
+  position: absolute;
+  z-index: 1000;
+}
+.copy-toast-container > :not(:last-child) {
+  margin-bottom: 0.5rem !important;
+} 
+
+.share-url-button {
+  user-select: none !important;
+}
+.copy-toast-container .btn-close {
+  float: right !important;
+}
+/*
+.toast-container .btn-close {
+  float: right !important;
+}
+.toast-container > :not(:last-child) {
+  margin-bottom: 0.5rem !important;
+}
+.toast-header .btn-close {
+  padding: 0.5rem 0.5rem !important;
+  cursor: pointer !important;
+  float: right !important;
+} */
+

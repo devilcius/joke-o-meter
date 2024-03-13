@@ -11,7 +11,9 @@ body {
 footer {
   width: 100%;
   bottom: 0;
-  background-color: #F7F7F7;
+  border-top: 2px solid #ddd;
+  box-shadow: 0 0 10px 0 #ddd;
+  background-color: #FFF;
 }
 
 footer .footer-notice {
@@ -34,12 +36,4 @@ footer .footer-notice {
     width: 20px !important;
     height: 20px !important;
   }
-}
-
-.toast-container {
-  font-family: 'Fredoka', system-ui !important;
-}
-
-.toast-container .btn-close {
-  float: right !important;
 }
