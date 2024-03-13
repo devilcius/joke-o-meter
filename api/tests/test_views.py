@@ -86,7 +86,6 @@ class JokeListViewTest(APITestCase):
         self.assertIsInstance(session_uuid, uuid.UUID)
 
     def test_jokes_filtered_by_language(self):
-        # Assuming your API and tests run in English by default
         response = self.client.get(reverse("joke-list"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         jokes_data = response.data["jokes"]

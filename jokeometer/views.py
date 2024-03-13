@@ -43,7 +43,6 @@ class DynamicMetaView(View):
             # It's a bot, serve the SEO-optimized content
             evaluations = JokeEvaluation.objects.filter(session=uuid)
             if evaluations.exists():
-                # Assuming create_jokometian_from_jokes_evaluation() and other necessary logic is implemented correctly
                 jokometian = create_jokometian_from_jokes_evaluation(evaluations)
                 jpg_image = re.sub(r"\.svg$", ".jpg", jokometian.image_url)
                 # Absolute url

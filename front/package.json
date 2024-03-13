@@ -1,7 +1,7 @@
 {
   "name": "front",
-  "version": "0.1.0",
-  "private": true,
+  "version": "v1.0.0",
+  "private": false,
   "proxy": "http://localhost:8000",
   "dependencies": {
     "@fontsource/chela-one": "^5.0.8",

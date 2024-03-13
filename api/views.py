@@ -46,7 +46,6 @@ class JokesEvaluationView(APIView):
             saved_evaluations = serializer.save()  # Save and capture the evaluations
 
             # Now, we pass these saved evaluations directly for ranking update
-            # Assuming the function accepts this directly
             update_jokometian_ranking(saved_evaluations)
 
             # Construct response using the session ID from one of the saved evaluations
