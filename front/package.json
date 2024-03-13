@@ -7,6 +7,7 @@
     "@fontsource/chela-one": "^5.0.8",
     "@fontsource/fredoka": "^5.0.8",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@react-spring/web": "^9.5.5",

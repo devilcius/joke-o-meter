@@ -3,7 +3,7 @@ body {
   margin-bottom: 150px !important;
 }
 #jokeometer {
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -11,5 +11,35 @@ body {
 footer {
   width: 100%;
   bottom: 0;
-  background-color: #FFF;
+  background-color: #F7F7F7;
+}
+
+footer .footer-notice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  font-size: 0.8em;
+  color: #666;
+  border-top: 1px solid #ddd;
+  font-family: 'Fredoka', system-ui !important;
+}
+
+/* for bigger screens */
+@media (min-width: 768px) {
+  footer .footer-notice {
+    font-size: 1.3em;
+  }
+  footer svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+
+.toast-container {
+  font-family: 'Fredoka', system-ui !important;
+}
+
+.toast-container .btn-close {
+  float: right !important;
 }

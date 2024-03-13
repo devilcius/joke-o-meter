@@ -34,9 +34,10 @@ const CopyUrl = ({url, currentLanguage}) => {
                     top: 'auto',
                     right: 20,
                 }}
+                className="toast-container"
                 show={showToast}
                 onClose={onToastClose}
-                delay={5000}
+                delay={500000}
                 autohide
             >
                 <Toast.Header>
