@@ -45,6 +45,12 @@
     display: block;
     overflow: auto;
 }
+/* Min height for firefox */
+@-moz-document url-prefix() {
+    .jokes-arsenal {
+        min-height: 700px;
+    }
+}
 .jokes-arsenal .card-body {
     font-family: Fredoka, system-ui !important;
 }

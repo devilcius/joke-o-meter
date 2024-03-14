@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Container, Row, Table } from 'react-bootstrap';
 import { fetchJokometiansRanking } from '../api/jokometians_ranking';
 import { getJokometianTraitMapper } from '../utils/index';
+import '../css/JokometiansRanking.css';
 
 const JokometiansRanking = () => {
     const { t } = useTranslation();
@@ -24,7 +25,7 @@ const JokometiansRanking = () => {
     }, []);
 
     return (
-        <Container>
+        <Container className="jokometian-ranking-container">
             <Row>
                 <h1>{t('ranking.title')}</h1>
                 <p className="mb-4">{t('ranking.description')}</p>
