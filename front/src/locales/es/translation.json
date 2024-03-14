@@ -4,6 +4,7 @@
     "footer.blog_title": "Artículo sobre el proyecto Joke-O-Meter",
     "footer.github_title": "Código fuente",
     "instructions.characters.introduction": "Si has llegado hasta aquí es posible que te hayas dado cuenta que los rasgos de los personajes no coinciden con el tipo de ofensa empleada en sus chistes, sino más bien todo lo contrario. Es como si el arsenal de chistes malvados no definiera al personaje. Contar un chiste ofensivo no te convierte en mala persona, ¿no? Supongo que depende de la intención, y otros miles de factores. Al menos que te haya tocado el personaje Diabólico, en tal caso yo me lo haría mirar.",
+    "instructions.characters.list_title": "Relación de rasgos y el tipo de ofensa de sus chistes",
     "instructions.characters.title": "Personajes",
     "instructions.characters.trait_diabolical": "Le gustan todos los chistes ofesensivos y repudia los que no los son",
     "instructions.characters.trait_diversity": "Etnicidad",

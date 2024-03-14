@@ -86,6 +86,7 @@ const JokometianView = () => {
                                         <JokometianTraits traits={jokometian.traits} />
                                         <hr />
                                         <JokometianAmmunition numberOfAmmunitions={jokometian.jokes?.length} />
+                                        <hr/>
                                     </div>
                                 </Card.Body>
                             </Card>
@@ -93,8 +94,7 @@ const JokometianView = () => {
                         <div className="flip-card-back">
                             <Card className='jokes-arsenal shadow-lg p-3 mb-5 bg-white rounded'>
                                 <Card.Header>{t('jokometian.jokes')}</Card.Header>
-                                <Card.Body>
-                                    {/* Render the JokometianJokes component with jokometian data */}
+                                <Card.Body >
                                     <JokometianArsenal jokometian={jokometian} />
                                 </Card.Body>
                             </Card>

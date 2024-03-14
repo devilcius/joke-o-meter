@@ -64,16 +64,5 @@
 .copy-toast-container .btn-close {
   float: right !important;
 }
-/*
-.toast-container .btn-close {
-  float: right !important;
-}
-.toast-container > :not(:last-child) {
-  margin-bottom: 0.5rem !important;
-}
-.toast-header .btn-close {
-  padding: 0.5rem 0.5rem !important;
-  cursor: pointer !important;
-  float: right !important;
-} */
+
 
