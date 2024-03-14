@@ -1,6 +1,7 @@
 body {
   font-family: 'Chela One', system-ui !important;
   margin-bottom: 150px !important;
+  height:100%;
 }
 #jokeometer {
   height: 100%;
@@ -19,17 +20,6 @@ footer {
   border-top: 2px solid #ddd;
   box-shadow: 0 0 10px 0 #ddd;
   background-color: #FFF;
-}
-
-footer .footer-notice {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  font-size: 0.8em;
-  color: #666;
-  border-top: 1px solid #ddd;
-  font-family: 'Fredoka', system-ui !important;
 }
 
 /* for bigger screens */

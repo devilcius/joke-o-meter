@@ -3,7 +3,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faBlog } from '@fortawesome/free-solid-svg-icons';
-import { faLeaf } from '@fortawesome/free-solid-svg-icons';
 
 import { t } from 'i18next';
 
@@ -33,12 +32,6 @@ const Footer = () => {
             >
               <FontAwesomeIcon icon={faBlog} className='text-black' />
             </a>
-          </Col>
-        </Row>
-        <Row>
-          <Col className="footer-notice">            
-            <small>{t('footer.notice')}</small>            
-            <FontAwesomeIcon icon={faLeaf} className='text-success' />
           </Col>
         </Row>
       </Container>

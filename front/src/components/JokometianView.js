@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import '../css/JokometianView.css'; // Ensure your CSS file is correctly imported
+import '../css/JokometianView.css';
 import { fetchJokometian } from '../api/jokometians';
 import { useTranslation } from 'react-i18next';
 import { Card } from 'react-bootstrap';
@@ -9,7 +9,7 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import Toast from 'react-bootstrap/Toast';
 import JokometianTraits from './JokometianTraits';
 import JokometianAmmunition from './JokometianAmmunition';
-import JokometianArsenal from './JokometianArsenal'; // Import the JokometianJokes component
+import JokometianArsenal from './JokometianArsenal'; 
 import CopyUrl from './CopyUrl';
 import i18n from '../i18n';
 

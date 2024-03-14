@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, ListGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSmileBeam, faFrownOpen, faHandPointer } from '@fortawesome/free-solid-svg-icons';
+import { faSmileBeam, faFrownOpen, faHandPointer, faLeaf } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import '../css/Instructions.css';
 
@@ -46,22 +46,36 @@ const Instructions = () => {
                     <p>{t('instructions.characters.introduction')}</p>
                 </Col>
             </Row>
+            <p><i>{t("instructions.characters.list_title")}:</i></p>
             <Row>
-                <Col>
+                <Col>                    
                     <ListGroup>
                         <ListGroup.Item>{t('jokometian.trait_wise') + " ➡️ "} <strong><span className="text-info">{t('instructions.characters.trait_wise')}</span></strong></ListGroup.Item>
                         <ListGroup.Item>{t('jokometian.trait_spiritual') + " ➡️ "} <strong><span className="text-info">{t('instructions.characters.trait_spiritual')}</span></strong></ListGroup.Item>
                         <ListGroup.Item>{t('jokometian.trait_resilient') + " ➡️ "} <strong><span className="text-info">{t('instructions.characters.trait_resilient')}</span></strong></ListGroup.Item>
                         <ListGroup.Item>{t('jokometian.trait_radiant') + " ➡️ "} <strong><span className="text-info">{t('instructions.characters.trait_radiant')}</span></strong></ListGroup.Item>
-                        <ListGroup.Item>{t('jokometian.trait_incandescent') + " ➡️ "} <strong><span className="text-info">{ t('instructions.characters.trait_incandescent')}</span></strong></ListGroup.Item>
-                        <ListGroup.Item>{t('jokometian.trait_fierce') + " ➡️ "} <strong><span className="text-info">{ t('instructions.characters.trait_fierce')}</span></strong></ListGroup.Item>
-                        <ListGroup.Item>{t('jokometian.trait_diversity') + " ➡️ "} <strong><span className="text-info">{ t('instructions.characters.trait_diversity')}</span></strong></ListGroup.Item>
-                        <hr/>
-                        <ListGroup.Item>{t('jokometian.trait_pure_soul') + " ➡️ "} <strong><span className="text-info">{ t('instructions.characters.trait_pure_soul')}</span></strong></ListGroup.Item>
-                        <ListGroup.Item>{t('jokometian.trait_grumpy') + " ➡️ "} <strong><span className="text-info">{ t('instructions.characters.trait_grumpy')}</span></strong></ListGroup.Item>
-                        <ListGroup.Item>{t('jokometian.trait_giggly') + " ➡️ "} <strong><span className="text-info">{ t('instructions.characters.trait_giggly')}</span></strong></ListGroup.Item>
-                        <ListGroup.Item>{t('jokometian.trait_diabolical') + " ➡️ "} <strong><span className="text-info">{ t('instructions.characters.trait_diabolical')}</span></strong></ListGroup.Item>
+                        <ListGroup.Item>{t('jokometian.trait_incandescent') + " ➡️ "} <strong><span className="text-info">{t('instructions.characters.trait_incandescent')}</span></strong></ListGroup.Item>
+                        <ListGroup.Item>{t('jokometian.trait_fierce') + " ➡️ "} <strong><span className="text-info">{t('instructions.characters.trait_fierce')}</span></strong></ListGroup.Item>
+                        <ListGroup.Item>{t('jokometian.trait_diversity') + " ➡️ "} <strong><span className="text-info">{t('instructions.characters.trait_diversity')}</span></strong></ListGroup.Item>
+                        <hr />
+                        <ListGroup.Item>{t('jokometian.trait_pure_soul') + " ➡️ "} <strong><span className="text-info">{t('instructions.characters.trait_pure_soul')}</span></strong></ListGroup.Item>
+                        <ListGroup.Item>{t('jokometian.trait_grumpy') + " ➡️ "} <strong><span className="text-info">{t('instructions.characters.trait_grumpy')}</span></strong></ListGroup.Item>
+                        <ListGroup.Item>{t('jokometian.trait_giggly') + " ➡️ "} <strong><span className="text-info">{t('instructions.characters.trait_giggly')}</span></strong></ListGroup.Item>
+                        <ListGroup.Item>{t('jokometian.trait_diabolical') + " ➡️ "} <strong><span className="text-info">{t('instructions.characters.trait_diabolical')}</span></strong></ListGroup.Item>
                     </ListGroup>
+                </Col>
+            </Row>
+            <h2>{t('instructions.commitment.title')}</h2>
+            <Row>
+                <Col>
+                    <p>{t('instructions.commitment.description')}</p>
+                </Col>
+            </Row>
+            <hr/>
+            <Row>
+                <Col>
+                    <small>{t('instructions.commitment.notice')}</small>
+                    <FontAwesomeIcon icon={faLeaf} className='text-success' />
                 </Col>
             </Row>
         </Container>

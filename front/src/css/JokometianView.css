@@ -42,7 +42,8 @@
 
 .jokes-arsenal {
     width: 23rem;
-    height: 100vh !important;
+    display: block;
+    overflow: auto;
 }
 .jokes-arsenal .card-body {
     font-family: Fredoka, system-ui !important;
