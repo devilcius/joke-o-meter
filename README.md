@@ -145,8 +145,6 @@ For front-end localization:
    });
    ```
 
-Certainly, adding a **TODO** section to your README.md can help track future enhancements and important tasks that need attention. Here's how you could structure this section to highlight the areas for improvement mentioned:
-
 ## TODO
 
 ### UI Improvements
