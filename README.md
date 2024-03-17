@@ -50,7 +50,11 @@ The Joke-O-Meter is a web application designed to entertain users by presenting 
    ```sh
    python manage.py migrate
    ```
-6. Run and compile translations
+6. Populate with fake data
+   ```sh
+   python manage.py populate_db
+   ```
+7. Run and compile translations
    ```sh   
    django-admin compilemessages
    ```

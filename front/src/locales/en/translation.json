@@ -49,7 +49,7 @@
     "swiper.no_more_cards": "No more jokes",
     "swiper.remaining_cards": "Remaining jokes: {{count}}",
     "toast.copy_url_success": "Now you can share the character with your friends",
-    "toast.success": "URL copied to clipboard",
+    "toast.success": "Address copied",
     "welcome.play": "Play",
     "welcome.instructions": "Manual",
     "welcome.lead": "Tell me what you're laughing at and I'll tell you what you're like",

@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 2vh; /* Adjust the height as needed to fill the screen or container */
+    height: 2vh;
   }
 
 /* Container for the flipping card */

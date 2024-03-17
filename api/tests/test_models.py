@@ -133,8 +133,6 @@ class JokometianRankingModelTest(TestCase):
         JokometianRanking.objects.create(
             name="Unique Name", score=123, image_url="unique_name_url.png"
         )
-
-        # Adjust the exception type based on your database backend
         with self.assertRaises(Exception):
             JokometianRanking.objects.create(
                 name="Unique Name", score=456, image_url="another_unique_name_url.png"
