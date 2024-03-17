@@ -19,3 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Addressed initial setup issues for serving static files and media through Nginx.
 - Resolved CSP blocking issues related to the eval function and inline scripts.
+
+## [1.1.0](https://github.com/devilcius/joke-o-meter/tree/v1.1.0) - 2024-03-17
+
+## Added
+- Command to populate dev database
+
+### Fixed
+- Translations
+- Style
+
