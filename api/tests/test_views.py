@@ -53,7 +53,6 @@ class JokeListViewTest(APITestCase):
             )
 
     def test_view_url_exists_at_desired_location(self):
-        # Adjust if your URL pattern differs
         response = self.client.get("/api/jokes/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -182,7 +181,6 @@ class JokesEvaluationViewTest(APITestCase):
             {"joke": self.jokes[0].id, "liked": True, "session": str(self.session.id)},
             {"joke": self.jokes[1].id, "liked": False, "session": str(self.session.id)},
         ]
-        # Adjust 'jokes_evaluation' based on your actual URL name
         url = reverse("evaluate-jokes")
 
         # Make the POST request

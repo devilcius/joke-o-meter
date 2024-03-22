@@ -3,7 +3,9 @@
 
 ## Description
 
-The Joke-O-Meter is a web application designed to entertain users by presenting them with a collection of jokes. Users can rate jokes based on their preferences, swiping right for jokes they like and left for those they do not. After evaluating a set of jokes, the application analyzes the user's preferences and assigns them a unique Jokometian character, each with its own set of traits reflecting the user's humor style. This project is split into two main components: a Django REST API backend for handling data and business logic, and a React frontend for interactive UI/UX.
+https://jokeometer.com
+
+Joke-O-Meter is a web application wher users can rate jokes based on their preferences, swiping right for jokes they like and left for those they do not. After evaluating a set of jokes, the application analyzes the user's preferences and assigns them a unique Jokometian character, each with its own set of traits reflecting the user's humor style. This project is split into two main components: a Django REST API backend for handling data and business logic, and a React frontend for interactive UI/UX.
 
 ## Features
 
