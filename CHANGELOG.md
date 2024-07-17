@@ -35,3 +35,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Translations
 - Dependencies
 
+## [1.1.2](https://github.com/devilcius/joke-o-meter/tree/v1.1.2) - 2024-05-23
+
+### Chore
+- Updates depency
+
+
+## [1.1.3](https://github.com/devilcius/joke-o-meter/tree/v1.1.3) - 2024-07-17
+
+### Chore
+- Updates depency
